@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="T_MAGIC_CODE_ITEM_20260922" author="generated" runAlways="false" >
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="T_MAGIC_CODE_ITEM"/>
+            </not>
+        </preConditions>
+        <createTable tableName="T_MAGIC_CODE_ITEM">
+            <column name="LIST_ID" type="bigint"  remarks="item id" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="CODE_ID" type="bigint" remarks=" code table id">
+                <constraints nullable="false" />
+            </column>
+            <column name="ENABLED" type="int(4)" remarks=" status,1 enabled,0 disabled">
+                <constraints nullable="false" />
+            </column>
+            <column name="NAME" type="varchar(200)" remarks="the item name">
+                    <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="varchar(500)" remarks="the code item description"/>
+            <column name="TENANT" type="varchar(200)" remarks="tenant code"/>
+            <column name="SRC_VALUE" type="varchar(100)" remarks="item  src value">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SRC_VALUE1" type="varchar(100)"  remarks="item src value1"/>
+            <column name="DEST_VALUE" type="varchar(100)" remarks="item dest value,taget value">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DYNAMIC_FIELDS" type="json"/>
+            <column name="CREATE_BY" type="bigint"/>
+            <column name="MODIFIED_BY" type="bigint"/>
+            <column name="CREATE_TIME" type="TIMESTAMP"/>
+            <column name="MODIFIED_TIME" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="U_MAGIC_CODE_ITEM_20260922" author="generated">
+        <addUniqueConstraint columnNames="CODE_ID,SRC_VALUE,SRC_VALUE1,TENANT" tableName="T_MAGIC_CODE_ITEM"
+                             constraintName="U_MAGIC_CODE_ITEM_CODE_ID_SRC_VALUE_TENANT"/>
+    </changeSet>
+    <changeSet id="IDX_MAGIC_CODE_ITEM_20260922" author="generated">
+        <createIndex indexName="IDX_MAGIC_CODE_ITEM_CODE_ID_SRC_VALUE_TENANT" tableName="T_MAGIC_CODE_ITEM">
+            <column name="CODE_ID"/>
+            <column name="TENANT"/>
+            <column name="SRC_VALUE"/>
+            <column name="SRC_VALUE1"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="F_MAGIC_CODE_ITEM_CODE_ID_20260922" author="generated">
+        <addForeignKeyConstraint baseTableName="T_MAGIC_CODE_ITEM" baseColumnNames="CODE_ID"
+                                 constraintName="F_MAGIC_CODE_ITEM_CODE_LIST_20260922"
+                                 referencedTableName="T_MAGIC_CODE_TABLE"
+                                 referencedColumnNames="LIST_ID"/>
+    </changeSet>
+
+</databaseChangeLog>

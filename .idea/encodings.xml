@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/foundations/basic-enhance/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/basic-enhance/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/condition-delegate/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/condition-delegate/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/data-jpa/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/data-jpa/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/rest-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/rest-client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/foundations/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/glory-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/glory-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic-cube/magic-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic-cube/magic-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic-cube/magic-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic-cube/magic-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic-cube/magic-resource/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic-cube/magic-resource/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic-cube/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic-cube/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/magic/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-content/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-content/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-resource/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-resource/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-resources/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/spark-resources/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

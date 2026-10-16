@@ -1,0 +1,41 @@
+/*
+ * Copyright (c) 2025. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
+package com.glory.foundation.basic.desensitize.logback;
+
+
+import ch.qos.logback.classic.pattern.ClassicConverter;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.glory.foundation.basic.desensitize.DesensitizeHelper;
+import org.slf4j.helpers.MessageFormatter;
+
+/**
+ * @author : YY
+ * @date : 2025/12/17
+ * @descprition :
+ *
+ */
+
+public class DesensitizeConverter extends ClassicConverter {
+	/**
+	 * @param event
+	 * @return
+	 */
+	@Override
+	public String convert(ILoggingEvent event) {
+		Object[] argumentArray = event.getArgumentArray();
+		if (null == argumentArray || argumentArray.length == 0){
+			return event.getFormattedMessage();
+		}
+		for (int i = 0; i < argumentArray.length; i++) {
+			argumentArray[i] = DesensitizeHelper.desensitizeToJson(argumentArray[i]);
+		}
+		return MessageFormatter.arrayFormat(event.getMessage(),argumentArray).getMessage();
+	}
+
+}

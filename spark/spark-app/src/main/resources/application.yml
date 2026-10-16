@@ -1,0 +1,103 @@
+
+spring:
+  application:
+    name: spark
+  datasource:
+    url: jdbc:mysql://localhost:3306/sparkdb
+#    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/change-master.xml
+  jpa:
+    hibernate:
+      ddl-auto: none
+      dialect: org.hibernate.dialect.MySQL5Dialect
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImp
+#    show-sql: true
+  Jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /spark-demo
+spark:
+  launcher:
+    disabled: false
+  snapshot:
+    master-app-name: spark
+    disabled: false
+    deploy:
+      master: true
+  content:
+    app-name: spark1
+  resource:
+    app-name: sparkTest
+  http:
+    snapshot:
+      save: /save
+      find-by-id: /{snapshotId}/{includeDetail}
+      query: /query
+      detail:
+        save: /detail/save
+        find-by-id: /detail/{detailId}
+        find-snapshot-id: /detail/all/{snapshotId}
+        query: /detail/query
+        queryItems: /item/query
+        task-status: /detail/{taskCode}/{status}
+    compensate:
+      transmit: /compensate/transmit
+      process: /compensate/item/process
+    content:
+      save: /content/save
+      find: /content/find/{listId}
+      find-spark-status: /content/findBySparkCode/{sparkCode}/{status}
+      find-task-status: /content/findByTaskCode/{taskCode}/{status}
+      query: /content/query
+    track:
+      save: /content/track/save
+      find: /content/track/find/{trackId}
+      find-content-id: /content/track/find/{contentId}/{status}
+      query: /content/track/query
+    host:
+      spark1: http://localhost:8080/spark-demo/test
+      sparkTest: http://localhost:8080/spark-demo/test
+      spark: http://localhost:8080/spark-demo
+  service:
+    snapshot:
+      find-detail-id: true
+    annotation:
+      save-person: true
+glory:
+  client:
+    http:
+      log: true
+  secret:
+    rsa:
+      public:
+        file: /crypto/rsa/rsa.public
+      private:
+        file: /crypto/rsa/rsa.private
+  desensitize:
+    rules[0]:
+      pattern: ^(.{2}).*$
+      replacement: $1*****
+      names: test
+      excludes: case
+    rules[1]:
+#      algorithm: AES
+      pattern: ^(.{3}).*$
+      replacement: $1###
+      names: case2
+      min-length: 4
+      with-prefix: true
+    rules[2]:
+      algorithm: AES
+      pattern: ^(.{1}).*$
+      replacement: $1*****
+      names: name

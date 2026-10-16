@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: glory-days
+
+  datasource:
+      url: jdbc:mysql://localhost:3306/glorydb
+      username: root
+#      password: 123456
+      password: CRY:so6HrCyrplzCapyC8GqqfA==
+      driver-class-name: com.mysql.cj.jdbc.Driver
+#  liquibase:
+#      enabled: true
+#      change-log: classpath:db/change-master.xml
+#  jpa:
+##      show-sql: true
+#      dialect: org.hibernate.dialect.MySQL5Dialect
+#      database: mysql
+#      ddl-auto: none
+  jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+
+server:
+  port: 8080
+  servlet:
+    context-path: /glory
+
+glory:
+  client:
+    http:
+      log: true
+  secret:
+    rsa:
+      public:
+        file: /crypto/rsa/rsa.public
+      private:
+        file: /crypto/rsa/rsa.private
+  desensitize:
+    rules[0]:
+      pattern: ^(.{2}).*$
+      replacement: $1*****
+      names: ^\w*ph\w+$,email
+      excludes: case
+      enabled: true
+#    rules[1]:
+#      #      algorithm: AES
+#      pattern: ^(.{3}).*$
+#      replacement: $1###
+#      names: case2
+#      min-length: 4
+#      with-prefix: true
+#    rules[2]:
+#      algorithm: AES
+#      pattern: ^(.{1}).*$
+#      replacement: $1*****
+#      names: name

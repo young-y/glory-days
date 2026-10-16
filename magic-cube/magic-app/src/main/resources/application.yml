@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: magic-cube
+  servlet:
+    multipart:
+        max-file-size: 10MB
+        max-request-size: 10MB
+  datasource:
+    url: jdbc:mysql://localhost:3306/magic_cube?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&allowMultiQueries=true&allowPublicKeyRetrieval=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+#     password: 123456
+    password: CRY:so6HrCyrplzCapyC8GqqfA==
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/change-master.xml
+  jpa:
+    hibernate:
+#      show-sql: true
+      dialect: org.hibernate.dialect.MySQL5Dialect
+#      database: mysql
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+
+server:
+  port: 8080
+  servlet:
+    context-path: /magic
+
+glory:
+  client:
+    http:
+      log: true
+  secret:
+    rsa:
+      public:
+        file: /crypto/rsa/rsa.public
+      private:
+        file: /crypto/rsa/rsa.private
+  desensitize:
+    rules[0]:
+      pattern: ^(.{2}).*$
+      replacement: $1*****
+      names: test
+      excludes: case
+    rules[1]:
+      #      algorithm: AES
+      pattern: ^(.{3}).*$
+      replacement: $1###
+      names: case2
+      min-length: 4
+      with-prefix: true
+    rules[2]:
+      algorithm: AES
+      pattern: ^(.{1}).*$
+      replacement: $1*****
+      names: name

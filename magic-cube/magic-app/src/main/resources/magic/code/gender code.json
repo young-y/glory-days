@@ -1,0 +1,15 @@
+{
+"name":"gender",
+"items":[
+  {
+    "name":"woman",
+    "srcValue":"W",
+    "destValue":"F"
+    },
+    {
+      "name":"man",
+      "srcValue":"M",
+      "destValue":"B"
+      }
+  ]
+}

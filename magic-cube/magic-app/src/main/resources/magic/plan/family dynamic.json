@@ -1,0 +1,41 @@
+{
+  "name" : "family dynamic",
+  "planCode" : "family3",
+  "rules" : [
+    {
+      "input" : "*",
+      "name" : "test",
+      "output" : "*",
+      "strategy" : "valueCopy",
+      "type" : 1
+    },
+    {
+      "input" : "house#*",
+      "name" : "test",
+      "output" : "house#*",
+      "strategy" : "valueCopy",
+      "type" : 1
+    },
+    {
+      "input" : "master#*",
+      "name" : "test",
+      "output" : "master#*",
+      "strategy" : "valueCopy",
+      "type" : 1
+    },
+    {
+      "input" : "address#*",
+      "name" : "test",
+      "output" : "house#address#*",
+      "strategy" : "valueCopy",
+      "type" : 1
+    },
+    {
+      "input" : "pets-*#*",
+      "name" : "test",
+      "output" : "master#pets-*#*",
+      "strategy" : "valueCopy",
+      "type" : 1
+    }
+  ]
+}

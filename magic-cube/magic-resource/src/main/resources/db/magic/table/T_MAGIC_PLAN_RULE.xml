@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="T_MAGIC_PLAN_RULE_20260922" author="generated" runAlways="false" >
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="T_MAGIC_PLAN_RULE"/>
+            </not>
+        </preConditions>
+        <createTable tableName="T_MAGIC_PLAN_RULE">
+            <column name="LIST_ID" type="bigint"  remarks="RULE id" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="PLAN_ID" type="bigint"  remarks="RULE id" >
+                <constraints nullable="false" />
+            </column>
+            <column name="NAME" type="varchar(200)" remarks="the rule name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ALIAS" type="varchar(200)" remarks="the rule alias name,overwrite the name if not null"/>
+            <column name="ENABLED" type="int(4)" defaultValue="1" remarks=" status,1 enabled,0 disabled">
+                <constraints nullable="false" />
+            </column>
+            <column name="TYPE" type="int(4)" defaultValue="0" remarks=" rule type,1 dynamic,0 normal,default normal">
+                <constraints nullable="false" />
+            </column>
+            <column name="INPUT" type="varchar(200)" remarks=" rule input,the path obtain value form source">
+                    <constraints nullable="false"/>
+            </column>
+            <column name="OUTPUT" type="varchar(200)" remarks="rule output, output value to target path">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRIORITY" type="int(8)" defaultValue="99" remarks=" priority,sorted strategy">
+                <constraints nullable="false" />
+            </column>
+            <column name="FORMULA" type="varchar(200)" remarks="the rule formula when need calculated"/>
+            <column name="FORMAT" type="varchar(200)" remarks="the rule format,need format output string"/>
+            <column name="STRATEGY" type="varchar(100)" remarks="the rule strategy,match MagicStrategy">
+                    <constraints nullable="false"/>
+            </column>
+            <column name="VALUE" type="varchar(200)" remarks="rule default value ,use in FixValueStrategy"/>
+            <column name="SCALA" type="int(8)" remarks="keep a certain number of decimal places "/>
+            <column name="EXCLUDE_NODES" type="json" remarks="when last digit fuzzy matching ,effective"/>
+            <column name="STEP_STRATEGY" type="json" remarks="the same magicNode need to execute others strategy"/>
+            <column name="DESCRIPTION" type="varchar(500)" remarks="the rule description"/>
+            <column name="TENANT" type="varchar(200)" remarks="tenant code"/>
+            <column name="DYNAMIC_FIELDS" type="json"/>
+            <column name="CREATE_BY" type="bigint"/>
+            <column name="MODIFIED_BY" type="bigint"/>
+            <column name="CREATE_TIME" type="TIMESTAMP"/>
+            <column name="MODIFIED_TIME" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="IDX_MAGIC_PLAN_RULE_FOR_20260922" author="generated">
+        <createIndex indexName="IDX_MAGIC_PLAN_RULE_PLAN_ID" tableName="T_MAGIC_PLAN_RULE">
+            <column name="PLAN_ID"/>
+        </createIndex>
+        <createIndex indexName="IDX_MAGIC_PLAN_RULE_PLAN_ID_TYPE" tableName="T_MAGIC_PLAN_RULE">
+            <column name="PLAN_ID"/>
+            <column name="TYPE"/>
+        </createIndex>
+        <createIndex indexName="IDX_MAGIC_PLAN_RULE_PLAN_ID_ENABLED" tableName="T_MAGIC_PLAN_RULE">
+            <column name="PLAN_ID"/>
+            <column name="ENABLED"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="F_MAGIC_PLAN_RULE_PLAN_ID_20260922" author="generated">
+        <addForeignKeyConstraint baseTableName="T_MAGIC_PLAN_RULE" baseColumnNames="PLAN_ID"
+                                 constraintName="F_MAGIC_PLAN_RULE_PLAN_ID_20260922" referencedTableName="T_MAGIC_PLAN"
+                                 referencedColumnNames="LIST_ID"/>
+    </changeSet>
+
+</databaseChangeLog>

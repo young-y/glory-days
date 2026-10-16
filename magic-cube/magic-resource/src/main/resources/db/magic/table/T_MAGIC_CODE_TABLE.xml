@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="T_MAGIC_CODE_TABLE_20260922" author="generated" runAlways="false" >
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="T_MAGIC_CODE_TABLE"/>
+            </not>
+        </preConditions>
+        <createTable tableName="T_MAGIC_CODE_TABLE">
+            <column name="LIST_ID" type="bigint"  remarks="code id" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="PLAN_ID" type="bigint" remarks="plan id"/>
+            <column name="ENABLED" type="int(4)" remarks=" status,1 enabled,0 disabled">
+                <constraints nullable="false" />
+            </column>
+            <column name="NAME" type="varchar(200)" remarks=" code table name">
+                    <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="varchar(500)" remarks="code description"/>
+            <column name="TENANT" type="varchar(200)" remarks="tenant code"/>
+            <column name="DYNAMIC_FIELDS" type="json"/>
+            <column name="CREATE_BY" type="bigint"/>
+            <column name="MODIFIED_BY" type="bigint"/>
+            <column name="CREATE_TIME" type="TIMESTAMP"/>
+            <column name="MODIFIED_TIME" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="U_MAGIC_CODE_TABLE_20260922" author="generated">
+        <addUniqueConstraint columnNames="NAME,TENANT" tableName="T_MAGIC_CODE_TABLE"
+                             constraintName="U_MAGIC_CODE_TABLE_NAME_TENANT"/>
+    </changeSet>
+    <changeSet id="IDX_MAGIC_CODE_TABLE_FOR_20260922" author="generated">
+        <createIndex indexName="IDX_MAGIC_CODE_TABLE_NAME_TENANT" tableName="T_MAGIC_CODE_TABLE">
+            <column name="NAME"/>
+            <column name="TENANT"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

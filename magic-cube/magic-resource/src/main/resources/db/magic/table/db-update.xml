@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+        <include file="T_MAGIC_PLAN.xml" relativeToChangelogFile="true"/>
+        <include file="T_MAGIC_PLAN_FILTER.xml" relativeToChangelogFile="true"/>
+        <include file="T_MAGIC_PLAN_RULE.xml" relativeToChangelogFile="true"/>
+        <include file="T_MAGIC_CODE_TABLE.xml" relativeToChangelogFile="true"/>
+        <include file="T_MAGIC_CODE_ITEM.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

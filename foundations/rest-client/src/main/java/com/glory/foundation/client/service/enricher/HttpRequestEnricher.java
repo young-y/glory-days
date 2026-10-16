@@ -1,0 +1,25 @@
+/*
+ * Copyright (c) 2025. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
+package com.glory.foundation.client.service.enricher;
+
+
+import com.glory.foundation.client.service.wrapper.HttpRequestWrapper;
+
+/**
+ * @author : YY
+ * @date : 2025/11/21
+ * @descprition :
+ * enrich operation for specific {@link HttpRequestWrapper},eg:authorization and specific http header
+ */
+@FunctionalInterface
+public interface HttpRequestEnricher {
+
+	<T,S>void enrich(HttpRequestWrapper<T,S> wrapper);
+
+}

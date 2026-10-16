@@ -1,0 +1,30 @@
+{
+  "items" : [
+    {
+      "destValue" : "1",
+      "name" : "cash",
+      "srcValue" : "C"
+    },
+    {
+      "destValue" : "AP",
+      "name" : "aliPay",
+      "srcValue" : "A"
+    },
+    {
+  "destValue" : "WP",
+  "name" : "wePay",
+  "srcValue" : "W"
+},
+{
+  "destValue" : "Y",
+  "name" : "yinlian",
+  "srcValue" : "N"
+},
+{
+  "destValue" : "H",
+  "name" : "gold",
+  "srcValue" : "G"
+}
+  ],
+  "name" : "payMod"
+}

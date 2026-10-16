@@ -1,0 +1,64 @@
+{
+  "filters" : [
+    {
+      "name" : "filter1",
+      "patterns" : [
+        "address#province",
+        "street"
+      ]
+    }
+  ],
+  "name" : "family filters",
+  "planCode" : "family5",
+  "rules" : [
+    {
+      "format" : "gender",
+      "input" : "master#sex",
+      "name" : "test",
+      "output" : "house#holder#sex",
+      "strategy" : "codeMap"
+    },
+    {
+      "format" : "yyyy年MM月dd日",
+      "input" : "master#birthday",
+      "name" : "test",
+      "output" : "house#holder#birthday",
+      "strategy" : "dateFormat"
+    },
+    {
+      "format" : "mask",
+      "input" : "master#email",
+      "name" : "test",
+      "output" : "house#holder#email",
+      "strategy" : "stringFormat"
+    },
+    {
+      "format" : "encrypt",
+      "input" : "master#phone",
+      "name" : "test",
+      "output" : "house#holder#phone",
+      "strategy" : "stringFormat"
+    },
+    {
+      "format" : "###.00",
+      "formatType" : 0,
+      "input" : "master#salary",
+      "name" : "test",
+      "output" : "house#holder#salary",
+      "strategy" : "numberFormat"
+    },
+    {
+      "input" : "master#work",
+      "name" : "test",
+      "output" : "house#holder#work",
+      "strategy" : "fixedValue",
+      "value" : "on test"
+    },
+    {
+      "input" : "address#*",
+      "name" : "test",
+      "output" : "house#address#*",
+      "strategy" : "valueCopy"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="T_MAGIC_PLAN_20260922" author="generated" runAlways="false" >
+        <preConditions onFail="WARN" onError="WARN">
+            <not>
+                <tableExists tableName="T_MAGIC_PLAN"/>
+            </not>
+        </preConditions>
+        <createTable tableName="T_MAGIC_PLAN">
+            <column name="LIST_ID" type="bigint"  remarks="plan id" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"  />
+            </column>
+            <column name="PLAN_CODE" type="varchar(200)" remarks="plan code">
+                <constraints nullable="false" />
+            </column>
+            <column name="ENABLED" type="int(4)" remarks="status,1 enabled,0 disabled">
+                <constraints nullable="false" />
+            </column>
+            <column name="NAME" type="varchar(200)" remarks="the plan name">
+                    <constraints nullable="false"/>
+            </column>
+            <column name="KEY_NAME_STRATEGY" type="varchar(200)"/>
+            <column name="DESCRIPTION" type="varchar(500)" remarks="the plan description"/>
+            <column name="TENANT" type="varchar(200)" remarks="tenant code"/>
+            <column name="DYNAMIC_FIELDS" type="json"/>
+            <column name="CREATE_BY" type="bigint"/>
+            <column name="MODIFIED_BY" type="bigint"/>
+            <column name="CREATE_TIME" type="TIMESTAMP"/>
+            <column name="MODIFIED_TIME" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="U_MAGIC_PLAN_20260922" author="generated">
+        <addUniqueConstraint columnNames="PLAN_CODE,TENANT" tableName="T_MAGIC_PLAN"
+                             constraintName="U_MAGIC_PLAN_CODE_TENANT"/>
+    </changeSet>
+    <changeSet id="IDX_MAGIC_PLAN_FOR_20260922" author="generated">
+        <createIndex indexName="IDX_MAGIC_PLAN_CODE_TENANT" tableName="T_MAGIC_PLAN">
+            <column name="PLAN_CODE"/>
+            <column name="TENANT"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
