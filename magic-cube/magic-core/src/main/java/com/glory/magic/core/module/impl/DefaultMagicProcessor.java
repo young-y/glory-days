@@ -33,8 +33,7 @@ public class DefaultMagicProcessor implements MagicProcessor {
             if (context.getRule() == null){//find rule by node,normal rule
                 context.findTypeRules(RuleType.NORMAL).forEach(rule -> {
                     MagicContext copyRule = context.copyRule(rule);
-                    //TODO test
-                    logger.info(">> process rule[{}] input[{}] is executing",rule.getStrategy(),rule.getInput());
+                    logger.trace(">> process rule[{}] input[{}] is executing",rule.getStrategy(),rule.getInput());
                     magicStrategyDelegate.execute(copyRule);
                 });
             }else {//dynamic rule

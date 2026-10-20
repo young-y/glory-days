@@ -15,12 +15,14 @@ import com.glory.magic.core.domain.code.MagicCodeBo;
 import com.glory.magic.core.domain.code.MagicCodeItemBo;
 import com.glory.magic.core.domain.node.MagicNode;
 import com.glory.magic.core.domain.node.ResultKeyNameStrategy;
+import com.glory.magic.core.domain.type.ExceptionStrategy;
 import com.glory.magic.core.domain.type.KeyNameStrategy;
 import com.glory.magic.core.domain.type.RuleType;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Convert;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,6 +43,7 @@ public class MagicPlanBo extends DomainBoWithDynamicFields {
     private String name;
     private String description;
     private String keyNameStrategy;
+    private String exceptionStrategy;
     private List<MagicPlanFilterBo> filters;
     private List<MagicPlanRuleBo> rules;
     private List<MagicCodeBo> codes;
@@ -104,6 +107,14 @@ public class MagicPlanBo extends DomainBoWithDynamicFields {
 
     public void setKeyNameStrategy(String keyNameStrategy) {
         this.keyNameStrategy = keyNameStrategy;
+    }
+
+    public String getExceptionStrategy() {
+        return StringUtils.hasLength(exceptionStrategy)?exceptionStrategy:ExceptionStrategy.Panic.getName();
+    }
+
+    public void setExceptionStrategy(String exceptionStrategy) {
+        this.exceptionStrategy = exceptionStrategy;
     }
 
     public List<MagicPlanFilterBo> getFilters() {

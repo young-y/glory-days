@@ -22,9 +22,9 @@ import jakarta.persistence.AttributeConverter;
  */
 
 public enum ExceptionStrategy implements PersistableEnum<Integer> {
-	Try("try_catch", 0)  //init
+	Try("tryCatch", 0)  //init
 	, Panic("panic", 1)
-	,Condition("condition",2)//success
+	,Condition("condition",2)//
 	;
 
 	private final String name;

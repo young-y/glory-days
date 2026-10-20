@@ -9,13 +9,8 @@
 package com.glory.magic.core.domain.magic;
 
 import com.glory.foundation.basic.domain.GloryRequest;
-import com.glory.foundation.basic.domain.PropertyDescImpl;
-import com.glory.magic.core.domain.node.ResultKeyNameStrategy;
 import com.glory.magic.core.domain.plan.MagicPlanBo;
 import com.glory.magic.core.domain.plan.MagicPlanRuleBo;
-import com.glory.magic.core.domain.type.ExceptionStrategy;
-
-import java.lang.reflect.ParameterizedType;
 
 /**
  * @author YY
@@ -27,7 +22,7 @@ public class MagicRequest <T> extends GloryRequest<T> {
     private MagicPlanBo plan;
     private String tenant;
     private boolean withDefaultRule= false;
-    private ExceptionStrategy strategy;
+    private String exceptionStrategy;
     private String keyNameStrategy;
 
     public String getPlanCode() {
@@ -71,12 +66,12 @@ public class MagicRequest <T> extends GloryRequest<T> {
         return null;
     }
 
-    public ExceptionStrategy getStrategy() {
-        return strategy;
+    public String getExceptionStrategy() {
+        return exceptionStrategy;
     }
 
-    public void setStrategy(ExceptionStrategy strategy) {
-        this.strategy = strategy;
+    public void setExceptionStrategy(String exceptionStrategy) {
+        this.exceptionStrategy = exceptionStrategy;
     }
 
     public String getKeyNameStrategy() {

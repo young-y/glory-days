@@ -25,6 +25,10 @@ public class CryptoWrapper {
     private String ivParameter;
     private boolean withPrefix = false;
     private String prefixStr;
+    private String pattern = "^(.{4}).*(.{4})$";
+    private String replacement = "$1****$2";
+    private int minLength =4;
+    private String minLengthStr = "****";
 
     public CryptoType getType() {
         return type;
@@ -79,6 +83,38 @@ public class CryptoWrapper {
         return this;
     }
 
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public String getReplacement() {
+        return replacement;
+    }
+
+    public void setReplacement(String replacement) {
+        this.replacement = replacement;
+    }
+
+    public int getMinLength() {
+        return minLength;
+    }
+
+    public void setMinLength(int minLength) {
+        this.minLength = minLength;
+    }
+
+    public String getMinLengthStr() {
+        return minLengthStr;
+    }
+
+    public void setMinLengthStr(String minLengthStr) {
+        this.minLengthStr = minLengthStr;
+    }
+
     @JsonIgnore
     public String getCipherText(){
         if (withPrefix){
@@ -111,6 +147,10 @@ public class CryptoWrapper {
 
     public static CryptoWrapper ofBase64(){
     	return of(CryptoType.BASE64);
+    }
+
+    public static CryptoWrapper ofMask(){
+    	return of(CryptoType.MASK);
     }
 
     public static CryptoWrapper of(CryptoType type){

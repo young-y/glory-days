@@ -28,6 +28,12 @@ import java.util.List;
  */
 public interface MagicStrategy extends MagicAdapter {
 
+    /** 1 build the result node in resultSet
+     *  2 check data node value is  null,return if null
+     * execute
+     * @param context {@link MagicContext}
+     * @return result node
+     */
     default ResultNode execute(MagicContext context){
         MagicPlanRuleBo rule = context.getRule();
         MagicNode node = context.getNode();
@@ -42,6 +48,12 @@ public interface MagicStrategy extends MagicAdapter {
         return doExecute(new RuntimeMetadata(context, rn));
     }
 
+    /** 1 specific implementation of strategy.
+     *  2 the execution entry when specifying the stepStrategy property
+     * execute
+     * @param metadata {@link RuntimeMetadata}
+     * @return result node
+     */
     default ResultNode doExecute(RuntimeMetadata metadata) {
         return metadata.getResultNode();
     }

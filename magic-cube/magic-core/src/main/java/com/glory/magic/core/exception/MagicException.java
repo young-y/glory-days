@@ -21,8 +21,7 @@ import jakarta.persistence.Convert;
 public class MagicException extends RuntimeException{
     private int code = ResultStatus.Fail.getValue();
     private boolean interrupted = false;// handler can interrupt
-    @Convert(converter = ExceptionStrategy.ExceptionStrategyConverter.class)
-    private ExceptionStrategy strategy = ExceptionStrategy.Panic;
+    private String strategy = ExceptionStrategy.Panic.getName();
 
     public MagicException(String message) {
         super(message);
@@ -50,18 +49,18 @@ public class MagicException extends RuntimeException{
         return this;
     }
 
-    public ExceptionStrategy getStrategy() {
+    public String getStrategy() {
         return strategy;
     }
 
-    public MagicException setStrategy(ExceptionStrategy strategy) {
+    public MagicException setStrategy(String strategy) {
         this.strategy = strategy;
         return  this;
     }
 
     public MagicContext delegate() {
         MagicContext context = new MagicContext();
-        context.setStrategy(strategy);
+        context.setExceptionStrategy(strategy);
         return context;
     }
 }

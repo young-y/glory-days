@@ -11,8 +11,10 @@ package com.glory.magic.core.domain.node;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.glory.foundation.basic.domain.PropertyDescImpl;
 import com.glory.magic.core.domain.plan.MagicPlanRuleBo;
+import com.glory.magic.core.helper.MagicHelper;
 import jakarta.annotation.Nonnull;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -118,6 +120,23 @@ public class ResultNode extends PropertyDescImpl {
     }
 
     @JsonIgnore
+    public String getPath() {
+        if (isRoot()){
+            return "";
+        }
+        String parentPath =  parent.getPath();
+        if (StringUtils.hasLength(parentPath)) {
+            parentPath += PathKey.GAP_SEPARATOR;
+        }
+        return parentPath+ key.getFullName();
+    }
+
+    @JsonIgnore
+    public String getNewOutput(String name){
+        return MagicHelper.replaceLastSection(rule.getOutput(),name);
+    }
+
+    @JsonIgnore
     public Map<String, Object> transToMap() {
         return transToMap(ResultKeyNameStrategy.normalCase);
     }
@@ -196,6 +215,10 @@ public class ResultNode extends PropertyDescImpl {
         return null == parent && null==key;
     }
 
+    @JsonIgnore
+    public boolean isTmpResultNode() {
+        return null == key;
+    }
     /**
      * does the list  need new element
      * @param key {@link ResultKey}

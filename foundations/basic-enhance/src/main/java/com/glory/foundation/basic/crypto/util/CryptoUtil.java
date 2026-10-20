@@ -47,6 +47,7 @@ public class CryptoUtil {
             case AES -> wrapper.formatCipherText(aesEncryptor().encrypt(wrapper));
             case DES -> wrapper.formatCipherText(desEncryptor().encrypt(wrapper));
             case BASE64 -> wrapper.formatCipherText(base64Encryptor().encrypt( wrapper));
+            case MASK -> wrapper.formatCipherText(maskEncryptor().encrypt(wrapper));
             default -> wrapper.getText();
         };
     }
@@ -189,6 +190,25 @@ public class CryptoUtil {
         return (wrapper) -> {
             try {
                 return new String(Base64.getDecoder().decode(wrapper.getText()),StandardCharsets.UTF_8);
+            }catch (Exception e){
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
+    private static UtilEncryptor maskEncryptor(){
+        return (wrapper) -> {
+            try {
+                String text = wrapper.getText();
+                String pattern = wrapper.getPattern();
+                if (StringUtils.hasLength(text)&&StringUtils.hasLength(pattern)){
+                    int minLength = wrapper.getMinLength();
+                    if (text.length()>=minLength){
+                        return text.replaceAll(pattern, wrapper.getReplacement());
+                    }
+                    return wrapper.getMinLengthStr();
+                }
+                return text;
             }catch (Exception e){
                 throw new RuntimeException(e);
             }

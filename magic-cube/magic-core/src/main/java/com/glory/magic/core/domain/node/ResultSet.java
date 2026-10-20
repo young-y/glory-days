@@ -8,10 +8,13 @@
 
 package com.glory.magic.core.domain.node;
 
+import com.glory.magic.core.domain.context.MagicContext;
+import com.glory.magic.core.domain.node.cache.CacheEventManager;
 import com.glory.magic.core.domain.plan.MagicPlanBo;
 import jakarta.annotation.Nonnull;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author YY
@@ -22,6 +25,7 @@ public class ResultSet {
     private final ResultNode resultNode = new ResultNode();
     private MagicPlanBo plan;
 
+    private final CacheEventManager manager = new CacheEventManager();
 
     public ResultNode addResultNode(ResultKey key){
         return resultNode.addResultNode(key);
@@ -49,5 +53,13 @@ public class ResultSet {
 
     public Map<String, Object> transToMap(@Nonnull ResultKeyNameStrategy<String> strategy){
         return resultNode.transToMap(strategy);
+    }
+
+    public void publishCacheEvent(MagicContext context, Consumer<ResultNode> transmit){
+        manager.publishCacheEvent(context,transmit );
+    }
+
+    public void consumeCacheEvent(ResultNode node){
+        manager.consumeCacheEvent(node);
     }
 }

@@ -11,16 +11,11 @@ package com.glory.magic.core.module.component.exception;
 import com.glory.foundation.delegate.domain.DelegateContext;
 import com.glory.foundation.delegate.domain.DelegateWrapper;
 import com.glory.magic.core.domain.context.MagicContext;
-import com.glory.magic.core.domain.type.ExceptionStrategy;
 import com.glory.magic.core.exception.MagicException;
 import com.glory.magic.core.module.component.MagicAdapter;
 import jakarta.annotation.Nonnull;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
 
 /**
  * @author YY
@@ -31,17 +26,13 @@ public interface ExceptionHandler extends MagicAdapter {
 
     void handle(@Nonnull MagicException e);
 
-    List<ExceptionStrategy> supportStrategies();
+    List<String> supportStrategies();
 
     @Override
     default boolean accept(DelegateContext context) {
         if (context instanceof MagicContext) {
-            BiPredicate<List<ExceptionStrategy>,ExceptionStrategy> predicate = (list,strategy) ->
-                    !CollectionUtils.isEmpty(list)
-                    && list.contains(strategy);
             return MagicAdapter.super.accept(context)
-                    && predicate.test(supportStrategies(),((MagicContext) context).getStrategy());
-
+                    && accept(new DelegateWrapper(supportStrategies(),((MagicContext) context).getExceptionStrategy()));
         }
         return false;
     }

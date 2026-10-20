@@ -35,7 +35,7 @@ public class MagicStrategyDelegate extends AbstractDelegate<MagicStrategy> {
                 .ifPresent(node->stepProcess(new RuntimeMetadata(context,node)));
     }
 
-    private void stepProcess(RuntimeMetadata metadata){
+    public void stepProcess(RuntimeMetadata metadata){
         MagicContext context = metadata.getContext();
         if (context.getRule().hasStepStrategy()){
             MagicPlanRuleBo stepRule = context.getRule().copyNextStrategyRule();

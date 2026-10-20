@@ -33,7 +33,7 @@ public class TryCatchExceptionHandler implements ExceptionHandler {
     }
 
     @Override
-    public List<ExceptionStrategy> supportStrategies() {
-        return List.of(ExceptionStrategy.Try);
+    public List<String> supportStrategies() {
+        return List.of(ExceptionStrategy.Try.getName());
     }
 }

@@ -12,20 +12,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.glory.foundation.basic.context.AppContext;
 import com.glory.foundation.delegate.domain.DelegateContext;
 import com.glory.magic.core.domain.magic.MagicRequest;
-import com.glory.magic.core.domain.magic.MagicResponse;
 import com.glory.magic.core.domain.node.MagicNode;
 import com.glory.magic.core.domain.node.ResultKey;
 import com.glory.magic.core.domain.node.ResultNode;
 import com.glory.magic.core.domain.node.ResultSet;
-import com.glory.magic.core.domain.plan.*;
-import com.glory.magic.core.domain.type.ExceptionStrategy;
+import com.glory.magic.core.domain.plan.MagicPlanBo;
+import com.glory.magic.core.domain.plan.MagicPlanRuleBo;
 import com.glory.magic.core.domain.type.RuleType;
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.Convert;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * @author YY
@@ -41,8 +40,7 @@ public class MagicContext extends DelegateContext  {
     private ResultSet result = new ResultSet();
     private String tenant;
     private MagicPlanRuleBo defaultRule;
-    @Convert(converter = ExceptionStrategy.ExceptionStrategyConverter.class)
-    private ExceptionStrategy strategy = ExceptionStrategy.Panic;
+    private String exceptionStrategy;
 
 
     public String getPlanCode() {
@@ -102,7 +100,7 @@ public class MagicContext extends DelegateContext  {
         setProperties(request.getProperties());
         setTenant(request.getTenant());
         setDefaultRule(request.getDefaultRule());
-        Optional.ofNullable(request.getStrategy()).ifPresent(this::setStrategy);
+        Optional.ofNullable(request.getExceptionStrategy()).ifPresent(this::setExceptionStrategy);
     }
     public String getTenant() {
         return null==tenant? AppContext.getTenantCode():tenant;
@@ -112,12 +110,12 @@ public class MagicContext extends DelegateContext  {
         this.tenant = tenant;
     }
 
-    public ExceptionStrategy getStrategy() {
-        return strategy;
+    public String getExceptionStrategy() {
+        return null==exceptionStrategy?plan.getExceptionStrategy():exceptionStrategy;
     }
 
-    public void setStrategy(ExceptionStrategy strategy) {
-        this.strategy = strategy;
+    public void setExceptionStrategy(String exceptionStrategy) {
+        this.exceptionStrategy = exceptionStrategy;
     }
 
     @JsonIgnore
@@ -131,7 +129,7 @@ public class MagicContext extends DelegateContext  {
         context.setProperties(this.properties);
         context.setTenant(this.tenant);
         context.setDefaultRule(this.defaultRule);
-        context.setStrategy(this.strategy);
+        context.setExceptionStrategy(this.exceptionStrategy);
         return context;
     }
     @JsonIgnore
@@ -169,6 +167,15 @@ public class MagicContext extends DelegateContext  {
         return result.addResultNode(ResultKey.create(rule.getOutput()));
     }
 
+    @JsonIgnore
+    public void publishCacheEvent(Consumer<ResultNode> transmit){
+        result.publishCacheEvent(this,transmit);
+    }
+
+    @JsonIgnore
+    public void consumeCacheEvent(ResultNode node){
+        result.consumeCacheEvent(node);
+    }
     @Deprecated
     public static MagicContext create(MagicNode node){
         MagicContext context = new MagicContext();

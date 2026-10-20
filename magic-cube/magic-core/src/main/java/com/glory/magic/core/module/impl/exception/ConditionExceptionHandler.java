@@ -44,7 +44,7 @@ public class ConditionExceptionHandler implements ExceptionHandler {
     }
 
     @Override
-    public List<ExceptionStrategy> supportStrategies() {
-        return List.of(ExceptionStrategy.Condition);
+    public List<String> supportStrategies() {
+        return List.of(ExceptionStrategy.Condition.getName());
     }
 }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.glory.foundation.basic.formater.DateFormater;
 import com.glory.foundation.basic.formater.ObjectFormater;
 import com.glory.magic.core.domain.node.MagicNode;
+import com.glory.magic.core.domain.node.PathKey;
 import com.glory.magic.core.domain.plan.MagicPlanRuleBo;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,10 +79,20 @@ public class MagicHelper {
     }
 
     private static void traverseMap(MagicNode node,Map<String,Object> map,Consumer<MagicNode> runner){
+        Map<String,Object> tmp = new HashMap<>();
         map.forEach((key, value) -> {
-            MagicNode child = node.addChild(key);
+            if (value instanceof Map<?,?> || value instanceof Collection<?>){
+                tmp.put(key,value);
+            }else {//ensure that the leaf nodes are executed first
+                MagicNode child = node.addChild(key);
+                child.setSource(map);
+                traverse(child,value,runner);
+            }
+        });
+        tmp.forEach((k,v)->{//non leaf nodes after
+            MagicNode child = node.addChild(k);
             child.setSource(map);
-            traverse(child,value,runner);
+            traverse(child,v,runner);
         });
     }
 
@@ -160,5 +168,21 @@ public class MagicHelper {
             }
         }
         return output;
+    }
+
+    public static String replaceLastSection( String str,String newSection){
+        if(!StringUtils.hasLength(newSection)){
+            return str;
+        }
+        if (str.endsWith(newSection)){
+            return str;
+        }
+        if (str.contains(PathKey.GAP_SEPARATOR)){//if contains # separator ,replace the last section
+            str = str.substring(0,str.lastIndexOf(PathKey.GAP_SEPARATOR));
+            str = str+PathKey.GAP_SEPARATOR+newSection;
+        }else {
+            str = newSection;
+        }
+        return str;
     }
 }

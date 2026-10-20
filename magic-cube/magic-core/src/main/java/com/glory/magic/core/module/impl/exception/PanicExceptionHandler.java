@@ -34,7 +34,7 @@ public class PanicExceptionHandler implements ExceptionHandler {
     }
 
     @Override
-    public List<ExceptionStrategy> supportStrategies() {
-        return List.of(ExceptionStrategy.Panic);
+    public List<String> supportStrategies() {
+        return List.of(ExceptionStrategy.Panic.getName());
     }
 }

@@ -50,6 +50,7 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
     private String tenant;// tenant
     @Convert(converter = BooleanEnum.BooleanEnumConverter.class)
     private BooleanEnum enabled = BooleanEnum.True;// rule enabled
+    private String cacheEventKey;
 
     public Long getListId() {
         return listId;
@@ -101,15 +102,15 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
             return node.getPath();
         }
         //root node key name
-        if (input.equals("\\w+")|| input.equals("*")){//Root paragraph replacement
+        if (output.equals("\\w+")|| output.equals("*")){//Root paragraph replacement
             return node.getName();
         }
-        //input can't empty,dynamic replace the last section
-        if (input.endsWith("#\\w+")|| input.endsWith("#*")){//Final paragraph replacement
-            String no = replaceLastSection(output, node.getName());
+        //output can't empty,dynamic replace the last section
+        if (output.endsWith("#\\w+")|| output.endsWith("#*")){//Final paragraph replacement
+            String no = MagicHelper.replaceLastSection(output, node.getName());
             return replaceDynamicOutput(no,node);
         }
-        String no = replaceLastSection(output, alias);
+        String no = MagicHelper.replaceLastSection(output, alias);
         return replaceDynamicOutput(no,node);
     }
 
@@ -223,6 +224,14 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
         this.enabled = enabled;
     }
 
+    public String getCacheEventKey() {
+        return cacheEventKey;
+    }
+
+    public void setCacheEventKey(String cacheEventKey) {
+        this.cacheEventKey = cacheEventKey;
+    }
+
     @Override
     public Long getPrimaryId() {
         return listId;
@@ -244,7 +253,6 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
     @JsonIgnore
     public MagicPlanRuleBo copy(){
         MagicPlanRuleBo rule = new MagicPlanRuleBo();
-//        BeanUtils.copyProperties(this,rule);
         rule.setPlanId(planId);
         rule.setName(name);
         rule.setAlias(alias);
@@ -263,6 +271,7 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
         rule.setListId(listId);
         rule.setExcludeNodes(excludeNodes);
         rule.setStepStrategy(stepStrategy);
+        rule.setCacheEventKey(cacheEventKey);
         rule.setDynamicFields(getDynamicFields());
         return rule;
     }
@@ -311,23 +320,7 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
         if (!StringUtils.hasLength( output)){
             output = input;
         }
-        output = replaceLastSection( output,name);
-    }
-
-    private String replaceLastSection( String str,String newSection){
-        if(!StringUtils.hasLength(newSection)){
-            return str;
-        }
-        if (str.endsWith(newSection)){
-            return str;
-        }
-        if (str.contains(PathKey.GAP_SEPARATOR)){//if contains # separator ,replace the last section
-            str = str.substring(0,str.lastIndexOf(PathKey.GAP_SEPARATOR));
-            str = str+PathKey.GAP_SEPARATOR+newSection;
-        }else {
-            str = newSection;
-        }
-        return str;
+        output = MagicHelper.replaceLastSection( output,name);
     }
 
 }

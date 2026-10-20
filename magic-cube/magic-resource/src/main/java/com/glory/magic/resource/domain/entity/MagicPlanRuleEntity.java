@@ -61,6 +61,8 @@ public class MagicPlanRuleEntity extends DomainEntityWithDynamicFields {
     @Column(name = "STEP_STRATEGY")//the same magicNode need to execute others strategy
     @Convert(converter = TypedListStringConverter.class)
     private List<String> stepStrategy;
+    @Column(name = "CACHE_EVENT_KEY")
+    private String cacheEventKey;
     @Column(name = "TENANT")
     private String tenant;// tenant
     @Column(name = "ENABLED", nullable = false)
@@ -193,6 +195,14 @@ public class MagicPlanRuleEntity extends DomainEntityWithDynamicFields {
 
     public void setStepStrategy(List<String> stepStrategy) {
         this.stepStrategy = stepStrategy;
+    }
+
+    public String getCacheEventKey() {
+        return cacheEventKey;
+    }
+
+    public void setCacheEventKey(String cacheEventKey) {
+        this.cacheEventKey = cacheEventKey;
     }
 
     public String getTenant() {

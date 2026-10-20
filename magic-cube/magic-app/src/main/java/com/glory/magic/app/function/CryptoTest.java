@@ -8,6 +8,8 @@
 
 package com.glory.magic.app.function;
 
+import com.glory.foundation.basic.crypto.CryptoContext;
+import com.glory.foundation.basic.crypto.CryptoHelper;
 import com.glory.foundation.basic.crypto.CryptoType;
 import com.glory.foundation.basic.crypto.util.CryptoUtil;
 import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
@@ -24,7 +26,19 @@ public class CryptoTest {
 //        testDES("QQQQQ");
 //        testRSA("AAAAA");
 //        testBase("AAAAA");
+        testMask("sort@163.com");
 
+    }
+
+    private static void testMask(String str){
+        CryptoWrapper context =  CryptoWrapper.ofMask();
+        context.setText(str);
+        context.setPattern("^(.{4}).*(.{4})$");
+        context.setReplacement("$1****$2");
+        context.setMinLength(14);
+        context.setMinLengthStr("****");
+        String encrypt = CryptoUtil.encrypt(context);
+        System.out.println("mask ->"+encrypt);
     }
 
     private static void testRSA(String str){

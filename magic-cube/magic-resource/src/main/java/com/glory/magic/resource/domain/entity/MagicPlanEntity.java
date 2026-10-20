@@ -39,6 +39,8 @@ public class MagicPlanEntity extends DomainEntityWithDynamicFields {
     private String description;
     @Column(name = "KEY_NAME_STRATEGY")
     private String keyNameStrategy;
+    @Column(name = "EXCEPTION_STRATEGY")
+    private String exceptionStrategy;
     @OneToMany
     @JoinColumn(name = "PLAN_ID")
     @Transient
@@ -111,6 +113,14 @@ public class MagicPlanEntity extends DomainEntityWithDynamicFields {
 
     public void setKeyNameStrategy(String keyNameStrategy) {
         this.keyNameStrategy = keyNameStrategy;
+    }
+
+    public String getExceptionStrategy() {
+        return exceptionStrategy;
+    }
+
+    public void setExceptionStrategy(String exceptionStrategy) {
+        this.exceptionStrategy = exceptionStrategy;
     }
 
     public List<MagicPlanFilterEntity> getFilters() {

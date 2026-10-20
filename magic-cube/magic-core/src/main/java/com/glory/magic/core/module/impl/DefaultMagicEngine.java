@@ -62,8 +62,7 @@ public class DefaultMagicEngine implements MagicEngine {
         response.setPlanCode(plan.getPlanCode());
         //normal rule
         Consumer<MagicNode> consumer = node -> {
-            //TODO test
-            logger.info(">> execute node: {}", node.getPath());
+            logger.trace(">> execute node: {}", node.getPath());
             doProcess(context.copyNode(node));
         };
         MagicNode rootNode = MagicHelper.traverse(request.getData(), consumer);
@@ -92,7 +91,7 @@ public class DefaultMagicEngine implements MagicEngine {
         try {
             magicProcessorDelegate.process(context);
         } catch (Exception e) {
-            exceptionHandlerDelegate.handler(new MagicException(e).setStrategy(context.getStrategy()));
+            exceptionHandlerDelegate.handler(new MagicException(e).setStrategy(context.getExceptionStrategy()));
         }
     }
 

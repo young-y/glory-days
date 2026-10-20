@@ -34,6 +34,10 @@ build/
 
 ### VS Code ###
 .vscode/
+.idea/
+.mvn/
+spark-core.iml
+
 
 ### Mac OS ###
 .DS_Store

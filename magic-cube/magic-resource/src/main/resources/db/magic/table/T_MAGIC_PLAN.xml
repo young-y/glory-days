@@ -24,7 +24,8 @@
             <column name="NAME" type="varchar(200)" remarks="the plan name">
                     <constraints nullable="false"/>
             </column>
-            <column name="KEY_NAME_STRATEGY" type="varchar(200)"/>
+            <column name="KEY_NAME_STRATEGY" type="varchar(200)" remarks="result key name strategy"/>
+            <column name="EXCEPTION_STRATEGY" type="varchar(200)" remarks="exception handle strategy"/>
             <column name="DESCRIPTION" type="varchar(500)" remarks="the plan description"/>
             <column name="TENANT" type="varchar(200)" remarks="tenant code"/>
             <column name="DYNAMIC_FIELDS" type="json"/>

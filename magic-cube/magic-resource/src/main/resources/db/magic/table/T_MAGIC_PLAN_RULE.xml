@@ -43,6 +43,7 @@
                     <constraints nullable="false"/>
             </column>
             <column name="VALUE" type="varchar(200)" remarks="rule default value ,use in FixValueStrategy"/>
+            <column name="CACHE_EVENT_KEY" type="varchar(200)" remarks="cache event key"/>
             <column name="SCALA" type="int(8)" remarks="keep a certain number of decimal places "/>
             <column name="EXCLUDE_NODES" type="json" remarks="when last digit fuzzy matching ,effective"/>
             <column name="STEP_STRATEGY" type="json" remarks="the same magicNode need to execute others strategy"/>
