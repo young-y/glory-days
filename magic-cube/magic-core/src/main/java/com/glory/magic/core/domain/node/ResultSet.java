@@ -13,6 +13,7 @@ import com.glory.magic.core.domain.node.cache.CacheEventManager;
 import com.glory.magic.core.domain.plan.MagicPlanBo;
 import jakarta.annotation.Nonnull;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -61,5 +62,13 @@ public class ResultSet {
 
     public void consumeCacheEvent(ResultNode node){
         manager.consumeCacheEvent(node);
+    }
+
+    public MagicContext getPublishCacheEventContext(@Nonnull String cacheEvent,String input){
+        return manager.getPublishCacheEventContext(cacheEvent,input);
+    }
+
+    public List<MagicContext> getPublishCacheEventContexts(@Nonnull String cacheEventKey){
+        return manager.getPublishCacheEventContexts(cacheEventKey);
     }
 }

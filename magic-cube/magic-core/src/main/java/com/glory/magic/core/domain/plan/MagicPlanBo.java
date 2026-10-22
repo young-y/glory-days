@@ -13,10 +13,9 @@ import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
 import com.glory.foundation.basic.domain.BooleanEnum;
 import com.glory.magic.core.domain.code.MagicCodeBo;
 import com.glory.magic.core.domain.code.MagicCodeItemBo;
+import com.glory.magic.core.domain.context.MagicContext;
 import com.glory.magic.core.domain.node.MagicNode;
-import com.glory.magic.core.domain.node.ResultKeyNameStrategy;
 import com.glory.magic.core.domain.type.ExceptionStrategy;
-import com.glory.magic.core.domain.type.KeyNameStrategy;
 import com.glory.magic.core.domain.type.RuleType;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Convert;
@@ -28,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * @author YY
@@ -169,26 +169,11 @@ public class MagicPlanBo extends DomainBoWithDynamicFields {
     }
 
     @JsonIgnore
-    public boolean exclude(MagicNode node){
+    public boolean exclude(@Nonnull MagicNode node){
         if (!CollectionUtils.isEmpty( filters)){
             return filters.stream().anyMatch(f->f.match(node.getPath()));
         }
         return false;
-    }
-
-    @JsonIgnore
-    public List<MagicPlanRuleBo> findDynamicRules(){
-        Assert.notEmpty(rules,String.format("The rules of %s is empty!",getPlanCode()));
-        return rules.stream().filter(r->r.getEnabled().isTrue()&&r.isType(RuleType.DYNAMIC)).toList();
-    }
-
-    @JsonIgnore
-    public void processDynamicRules(@Nonnull MagicNode root, @Nonnull BiConsumer<MagicNode,MagicPlanRuleBo> dynamicConsumer){
-        findDynamicRules().forEach(rule->{
-            root.findNodes(rule.getInput()).forEach(node->{
-                dynamicConsumer.accept(node,rule);
-            });
-        });
     }
 
     @JsonIgnore
@@ -213,5 +198,28 @@ public class MagicPlanBo extends DomainBoWithDynamicFields {
         }
         return null;
 
+    }
+
+    @JsonIgnore
+    public List<MagicPlanRuleBo> findRulesByType(@Nonnull RuleType ruleType){
+        Assert.notEmpty(rules,String.format("The rules of %s is empty!",getPlanCode()));
+        return rules.stream().filter(r->r.getEnabled().isTrue()&&r.isType(ruleType)).toList();
+    }
+
+    @JsonIgnore
+    public void processDynamicRules(@Nonnull MagicNode root, @Nonnull BiConsumer<MagicNode,MagicPlanRuleBo> dynamicConsumer){
+        findRulesByType(RuleType.DYNAMIC).forEach(rule->{
+            root.findNodes(rule.getInput()).forEach(node->{
+                dynamicConsumer.accept(node,rule);
+            });
+        });
+    }
+
+    @JsonIgnore
+    public void processGlobalRules(@Nonnull MagicContext context, @Nonnull Consumer<MagicContext> consumer) {
+        findRulesByType(RuleType.GLOBAL).forEach(rule->{
+            MagicContext ruleContext = context.copyRule(rule);
+            consumer.accept(ruleContext);
+        });
     }
 }

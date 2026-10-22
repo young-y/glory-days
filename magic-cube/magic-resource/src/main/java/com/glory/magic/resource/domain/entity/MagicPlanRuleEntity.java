@@ -8,13 +8,16 @@
 
 package com.glory.magic.resource.domain.entity;
 
+import com.glory.foundation.basic.type.converter.WithTypeMapConverter;
 import com.glory.foundation.data.jpa.converter.TypedListStringConverter;
+import com.glory.foundation.data.jpa.converter.TypedMapConverter;
 import com.glory.foundation.data.jpa.domain.entity.DomainEntityWithDynamicFields;
 import com.glory.foundation.basic.domain.BooleanEnum;
 import com.glory.magic.core.domain.type.RuleType;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author YY
@@ -68,6 +71,9 @@ public class MagicPlanRuleEntity extends DomainEntityWithDynamicFields {
     @Column(name = "ENABLED", nullable = false)
     @Convert(converter = BooleanEnum.BooleanEnumConverter.class)
     private BooleanEnum enabled = BooleanEnum.True;// rule enabled
+    @Column(name = "PARAMETERS")
+    @Convert(converter = WithTypeMapConverter.class)
+    private Map<String, Object> parameters;
 
     public Long getListId() {
         return listId;
@@ -219,5 +225,13 @@ public class MagicPlanRuleEntity extends DomainEntityWithDynamicFields {
 
     public void setEnabled(BooleanEnum enabled) {
         this.enabled = enabled;
+    }
+
+    public Map<String, Object> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map<String, Object> parameters) {
+        this.parameters = parameters;
     }
 }

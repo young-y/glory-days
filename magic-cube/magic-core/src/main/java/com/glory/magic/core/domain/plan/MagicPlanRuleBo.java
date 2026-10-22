@@ -9,6 +9,7 @@
 package com.glory.magic.core.domain.plan;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.glory.foundation.basic.type.WithType;
 import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
 import com.glory.foundation.basic.domain.BooleanEnum;
 import com.glory.magic.core.domain.node.MagicNode;
@@ -21,6 +22,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -51,6 +53,8 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
     @Convert(converter = BooleanEnum.BooleanEnumConverter.class)
     private BooleanEnum enabled = BooleanEnum.True;// rule enabled
     private String cacheEventKey;
+//    @WithType
+    private Map<String, Object> parameters;
 
     public Long getListId() {
         return listId;
@@ -230,6 +234,14 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
 
     public void setCacheEventKey(String cacheEventKey) {
         this.cacheEventKey = cacheEventKey;
+    }
+
+    public Map<String, Object> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map<String, Object> parameters) {
+        this.parameters = parameters;
     }
 
     @Override

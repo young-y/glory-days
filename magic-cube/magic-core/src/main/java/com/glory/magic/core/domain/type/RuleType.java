@@ -19,7 +19,10 @@ import jakarta.persistence.AttributeConverter;
  * @description: TODO
  */
 public enum RuleType implements PersistableEnum<Integer> {
-    NORMAL("normal",0),DYNAMIC("dynamic",1);
+    NORMAL("normal",0),
+    DYNAMIC("dynamic",1),
+    GLOBAL("global",2)
+    ;
 
     private final String name;
     private final int value;

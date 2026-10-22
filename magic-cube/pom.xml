@@ -25,6 +25,7 @@
         <magic.version>1.0-SNAPSHOT</magic.version>
         <mysql.version>8.0.33</mysql.version>
         <liquibase.core.version>4.29.0</liquibase.core.version>
+        <groovy.version>3.0.21</groovy.version>
     </properties>
 
     <dependencyManagement>
@@ -78,6 +79,11 @@
                 <groupId>com.glory.magic</groupId>
                 <artifactId>magic-resource</artifactId>
                 <version>${magic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy</artifactId>
+                <version>${groovy.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

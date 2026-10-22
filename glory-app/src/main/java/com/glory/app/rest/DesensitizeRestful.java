@@ -49,13 +49,14 @@ public class DesensitizeRestful {
         List<Car> cars = new ArrayList<>();
         cars.add(Car.createCar("AAAA"));
         cars.add(Car.createCar("BBBB"));
-        object.setCars(cars);
-        object.setCars1( cars);
-        object.setCars2( cars);
+//        object.setCars(cars);
+//        object.setCars1( cars);
+//        object.setCars2( cars);
         Map<String, Car> collect = cars.stream().collect(Collectors.toMap(Car::getName, c -> c));
         object.setCarMap(collect);
         object.setCarMap1(collect);
-        object.setCarMap2(collect);
+        Map<String,String> collect1 = collect.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getName()));
+        object.setCarMap2(collect1);
         object.setEmail("123456@qq.com");
         object.setPhone("12345678901");
         return object;

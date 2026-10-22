@@ -28,7 +28,8 @@ public class WithTypeObject {
     @WithType
     private Map<String, ?> carMap;
     private Map<String, Car> carMap1;
-    private Map<String, ?> carMap2;
+    @WithType
+    private Map<String, String> carMap2;
     private String phone;
     @Secret
     private String email;
@@ -81,11 +82,11 @@ public class WithTypeObject {
         this.carMap1 = carMap1;
     }
 
-    public Map<String, ?> getCarMap2() {
+    public Map<String, String> getCarMap2() {
         return carMap2;
     }
 
-    public void setCarMap2(Map<String, ?> carMap2) {
+    public void setCarMap2(Map<String, String> carMap2) {
         this.carMap2 = carMap2;
     }
 

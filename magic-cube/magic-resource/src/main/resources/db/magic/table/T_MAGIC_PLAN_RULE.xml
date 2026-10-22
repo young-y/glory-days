@@ -49,6 +49,7 @@
             <column name="STEP_STRATEGY" type="json" remarks="the same magicNode need to execute others strategy"/>
             <column name="DESCRIPTION" type="varchar(500)" remarks="the rule description"/>
             <column name="TENANT" type="varchar(200)" remarks="tenant code"/>
+            <column name="PARAMETERS" type="json"/>
             <column name="DYNAMIC_FIELDS" type="json"/>
             <column name="CREATE_BY" type="bigint"/>
             <column name="MODIFIED_BY" type="bigint"/>

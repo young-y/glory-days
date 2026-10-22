@@ -20,6 +20,7 @@ import com.glory.magic.core.helper.MagicExplorer;
 import com.glory.magic.core.helper.MagicHelper;
 import com.glory.magic.core.module.component.engine.MagicEngine;
 import com.glory.magic.core.module.delegate.exception.ExceptionHandlerDelegate;
+import com.glory.magic.core.module.delegate.handler.MagicHandlerDelegate;
 import com.glory.magic.core.module.delegate.processor.MagicProcessorDelegate;
 import com.glory.magic.core.service.resources.MagicResourceService;
 import jakarta.annotation.Nonnull;
@@ -44,6 +45,7 @@ public class DefaultMagicEngine implements MagicEngine {
     private MagicProcessorDelegate magicProcessorDelegate;
     private ExceptionHandlerDelegate exceptionHandlerDelegate;
     private MagicExplorer magicExplorer;
+    private MagicHandlerDelegate magicHandlerDelegate;
 
     @Override
     public <T,R> MagicResponse<R> execute(@Nonnull MagicRequest<T> request) {
@@ -71,6 +73,8 @@ public class DefaultMagicEngine implements MagicEngine {
             doProcess(context.copyDynamicRule(rule,node));
         };
         plan.processDynamicRules(rootNode, dynamicConsumer);
+        context.setNode(rootNode);
+        doHandle( context);
         response.setResultMapData(context.getResult().transToMap(getKeyNameStrategy(request,plan)));//result to map
         return response;
     }
@@ -85,6 +89,14 @@ public class DefaultMagicEngine implements MagicEngine {
             nameStrategy=magicExplorer.getKeyNameStrategy(keyNameStrategy);
         }
         return null==nameStrategy? ResultKeyNameStrategy.normalCase:nameStrategy;
+    }
+
+    private void doHandle(@Nonnull MagicContext context){
+        try {
+            magicHandlerDelegate.handle(context);
+        } catch (Exception e) {
+            exceptionHandlerDelegate.handler(new MagicException(e).setStrategy(context.getExceptionStrategy()));
+        }
     }
 
     private void doProcess(@Nonnull MagicContext context){
@@ -123,5 +135,10 @@ public class DefaultMagicEngine implements MagicEngine {
     @Resource
     public void setMagicExplorer(MagicExplorer magicExplorer) {
         this.magicExplorer = magicExplorer;
+    }
+
+    @Resource
+    public void setMagicHandlerDelegate(MagicHandlerDelegate magicHandlerDelegate) {
+        this.magicHandlerDelegate = magicHandlerDelegate;
     }
 }

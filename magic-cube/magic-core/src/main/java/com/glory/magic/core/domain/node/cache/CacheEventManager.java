@@ -10,13 +10,13 @@ package com.glory.magic.core.domain.node.cache;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.glory.magic.core.domain.context.MagicContext;
+import com.glory.magic.core.domain.node.MagicNode;
 import com.glory.magic.core.domain.node.ResultNode;
 import jakarta.annotation.Nonnull;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -62,6 +62,27 @@ public class CacheEventManager {
         });
     }
 
+    public List<MagicContext> getPublishCacheEventContexts(@Nonnull String cacheEventKey) {
+        List<PublishCacheEvent> publishCacheEvents = cacheEventMap.get(cacheEventKey);
+        if (!CollectionUtils.isEmpty(publishCacheEvents)) {
+            return publishCacheEvents.stream().map(PublishCacheEvent::context).toList();
+        }
+        return null;
+    }
+
+    public MagicContext getPublishCacheEventContext(@Nonnull String cacheEventKey, String input) {
+        List<PublishCacheEvent> publishCacheEvents = cacheEventMap.get(cacheEventKey);
+        if (!CollectionUtils.isEmpty(publishCacheEvents)) {
+            if (StringUtils.hasLength( input)) {
+                Optional<PublishCacheEvent> event = publishCacheEvents.stream().filter(e -> e.matchInput(input)).findFirst();
+                return event.map(publishCacheEvent -> publishCacheEvent.context).orElse(null);
+            }else {
+                return publishCacheEvents.getFirst().context;
+            }
+        }
+        return null;
+    }
+
     @JsonIgnore
     public void clear(String cacheEventKey) {
         cacheEventMap.remove(cacheEventKey);
@@ -102,8 +123,18 @@ public class CacheEventManager {
         }
 
         @JsonIgnore
+        public MagicNode getMagicNode(){
+            return context.getNode();
+        }
+
+        @JsonIgnore
         public boolean matchEvent(@Nonnull ConsumeCacheEvent eventKey) {
             return getCacheEventKey().equals(eventKey.getCacheEventKey());
+        }
+
+        @JsonIgnore
+        public boolean matchInput(@Nonnull String input) {
+            return context.getNode().getPath().equals(input);
         }
     }
 
