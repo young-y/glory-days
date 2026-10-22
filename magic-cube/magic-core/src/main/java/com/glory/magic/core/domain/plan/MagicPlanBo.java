@@ -36,14 +36,14 @@ import java.util.function.Consumer;
  */
 public class MagicPlanBo extends DomainBoWithDynamicFields {
     private Long listId;
-    private String planCode;
+    private String planCode;//plan code,required
     private String tenant;
     @Convert(converter = BooleanEnum.BooleanEnumConverter.class)
     private BooleanEnum enabled =  BooleanEnum.True;
-    private String name;
+    private String name;//plan name,required
     private String description;
-    private String keyNameStrategy;
-    private String exceptionStrategy;
+    private String keyNameStrategy;//result key name strategy
+    private String exceptionStrategy;//exception handle strategy
     private List<MagicPlanFilterBo> filters;
     private List<MagicPlanRuleBo> rules;
     private List<MagicCodeBo> codes;

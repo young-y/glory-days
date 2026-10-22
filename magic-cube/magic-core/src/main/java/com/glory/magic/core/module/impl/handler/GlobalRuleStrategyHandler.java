@@ -18,7 +18,8 @@ import org.springframework.stereotype.Component;
 /**
  * @author YY
  * @date 2026/10/21
- * @description: TODO
+ * @description:
+ *  process global rules
  */
 @Component
 @Order(5)

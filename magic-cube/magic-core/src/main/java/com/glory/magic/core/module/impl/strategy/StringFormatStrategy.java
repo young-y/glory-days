@@ -21,6 +21,8 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+import static com.glory.magic.core.helper.MagicConstant.*;
+
 /**
  * @author YY
  * @date 2026/9/20
@@ -47,7 +49,7 @@ public class StringFormatStrategy implements MagicStrategy {
                 case "mask"->
                         rn.setValue(encryptMask(rule, value.toString()));
                 case "encrypt"-> {
-                    String algorithm = rule.getString("algorithm");// AES,DES, RSA,BASE64,default:AES
+                    String algorithm = rule.getString(RULE_FORMAT_ALGORITHM);// AES,DES, RSA,BASE64,default:AES
                     CryptoType type = CryptoType.fromPersistableValue(algorithm);
                     if (null == type){
                         type = CryptoType.AES;
@@ -65,30 +67,24 @@ public class StringFormatStrategy implements MagicStrategy {
     private String encryptMask(MagicPlanRuleBo rule, String value) {
         CryptoContext context = new CryptoContext();
         context.setType(CryptoType.MASK);
-        if (rule.containsKey("pattern")){
-            context.setPattern(rule.getString("pattern"));
+        if (rule.containsKey(RULE_FORMAT_PATTERN)){
+            context.setPattern(rule.getString(RULE_FORMAT_PATTERN));
         }
-        if (rule.containsKey("replacement")){
-            context.setReplacement(rule.getString("replacement"));
+        if (rule.containsKey(RULE_FORMAT_REPLACEMENT)){
+            context.setReplacement(rule.getString(RULE_FORMAT_REPLACEMENT));
         }
-        if (rule.containsKey("minLength")){
-            context.setMinLength(Integer.parseInt(rule.getString("minLength")));
+        if (rule.containsKey(RULE_FORMAT_MINLENGTH)){
+            context.setMinLength(Integer.parseInt(rule.getString(RULE_FORMAT_MINLENGTH)));
         }
-        if (rule.containsKey("minLengthStr")){
-            context.setMinLengthStr(rule.getString("minLengthStr"));
+        if (rule.containsKey(RULE_FORMAT_MINLENGTH_STR)){
+            context.setMinLengthStr(rule.getString(RULE_FORMAT_MINLENGTH_STR));
         }
         context.setValue(value);
         return CryptoHelper.encrypt(context);
     }
-    private  String capitalize(String str) {
-        if (str == null || str.isEmpty()) {
-            return str;
-        }
-        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
-    }
 
     @Override
     public List<String> supportStrategies() {
-        return List.of("stringFormat");
+        return List.of(STRATEGY_STRING_FORMAT);
     }
 }

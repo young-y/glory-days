@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.glory.magic.core.helper.MagicConstant.STRATEGY_VALUE_COPY;
+
 /**
  * @author YY
  * @date 2026/9/20
@@ -24,6 +26,6 @@ public class ValueCopyStrategy implements MagicStrategy {
 
     @Override
     public List<String> supportStrategies() {
-        return List.of("valueCopy");
+        return List.of(STRATEGY_VALUE_COPY);
     }
 }

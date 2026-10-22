@@ -12,7 +12,6 @@ import com.glory.magic.core.domain.context.MagicContext;
 import com.glory.magic.core.domain.context.RuntimeMetadata;
 import com.glory.magic.core.domain.node.MagicNode;
 import com.glory.magic.core.domain.node.ResultNode;
-import com.glory.magic.core.domain.node.cache.CacheEventManager;
 import com.glory.magic.core.domain.plan.MagicPlanRuleBo;
 import com.glory.magic.core.module.component.strategy.MagicStrategy;
 import com.glory.magic.core.module.delegate.strategy.MagicStrategyDelegate;
@@ -23,10 +22,13 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static com.glory.magic.core.helper.MagicConstant.STRATEGY_PUBLISH_CACHE_EVENT;
+
 /**
  * @author YY
  * @date 2026/10/17
- * @description: TODO
+ * @description:
+ * delay execute strategy when consume cache event happened
  */
 @Component
 public class CacheEventPublishStrategy implements MagicStrategy {
@@ -37,7 +39,7 @@ public class CacheEventPublishStrategy implements MagicStrategy {
         Consumer<ResultNode> consumer = resultNode -> {
             MagicPlanRuleBo rule = context.getRule();
             MagicNode node = context.getNode();
-            ResultNode rn = null;
+            ResultNode rn;
             if (resultNode.isTmpResultNode()){
                 rn = context.getResult().addResultNode(rule.getReallyOutput(node));
             }else {
@@ -58,6 +60,6 @@ public class CacheEventPublishStrategy implements MagicStrategy {
 
     @Override
     public List<String> supportStrategies() {
-        return List.of("publishCacheEvent");
+        return List.of(STRATEGY_PUBLISH_CACHE_EVENT);
     }
 }

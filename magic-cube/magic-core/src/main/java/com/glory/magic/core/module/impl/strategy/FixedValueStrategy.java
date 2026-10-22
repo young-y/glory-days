@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.glory.magic.core.helper.MagicConstant.STRATEGY_FIXED_VALUE;
+
 /**
  * @author YY
  * @date 2026/9/20
@@ -34,6 +36,6 @@ public class FixedValueStrategy implements MagicStrategy {
 
     @Override
     public List<String> supportStrategies() {
-        return List.of("fixedValue");
+        return List.of(STRATEGY_FIXED_VALUE);
     }
 }

@@ -9,11 +9,9 @@
 package com.glory.magic.core.domain.plan;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.glory.foundation.basic.type.WithType;
-import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
 import com.glory.foundation.basic.domain.BooleanEnum;
+import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
 import com.glory.magic.core.domain.node.MagicNode;
-import com.glory.magic.core.domain.node.PathKey;
 import com.glory.magic.core.domain.type.RuleType;
 import com.glory.magic.core.helper.MagicHelper;
 import jakarta.annotation.Nonnull;
@@ -23,7 +21,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author YY
@@ -53,8 +50,7 @@ public class MagicPlanRuleBo extends DomainBoWithDynamicFields {
     @Convert(converter = BooleanEnum.BooleanEnumConverter.class)
     private BooleanEnum enabled = BooleanEnum.True;// rule enabled
     private String cacheEventKey;
-//    @WithType
-    private Map<String, Object> parameters;
+    private Map<String, Object> parameters;//formula strategy parameters
 
     public Long getListId() {
         return listId;

@@ -23,6 +23,9 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
+import static com.glory.magic.core.helper.MagicConstant.RULE_FORMAT_DATE_FORMAT;
+import static com.glory.magic.core.helper.MagicConstant.STRATEGY_DATE_FORMAT;
+
 /**
  * @author YY
  * @date 2026/9/20
@@ -41,8 +44,8 @@ public class DateFormatStrategy implements MagicStrategy {
         try{
             switch (value) {
                 case String s -> {
-                    String dateFormat = rule.getString("dateFormat",springDateFormat);//if config in rule, use it.
-                    Date date = FormatHelper.getFormat(dateFormat).parse(value.toString());
+                    String dateFormat = rule.getString(RULE_FORMAT_DATE_FORMAT,springDateFormat);//if config in rule, use it.
+                    Date date = FormatHelper.getFormat(dateFormat).parse(s);
                     setDateFormat(rule, rn, date);
                 }
                 case Date date -> setDateFormat(rule, rn, date);
@@ -66,6 +69,6 @@ public class DateFormatStrategy implements MagicStrategy {
 
     @Override
     public List<String> supportStrategies() {
-        return List.of("dateFormat");
+        return List.of(STRATEGY_DATE_FORMAT);
     }
 }

@@ -18,10 +18,13 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 
+import static com.glory.magic.core.helper.MagicConstant.STRATEGY_CONSUME_CACHE_EVENT;
+
 /**
  * @author YY
  * @date 2026/10/17
- * @description: TODO
+ * @description:
+ * not create a new result node and trigger publish event consumer
  */
 @Component
 public class CacheEventConsumeStrategy implements MagicStrategy {
@@ -45,6 +48,6 @@ public class CacheEventConsumeStrategy implements MagicStrategy {
 
     @Override
     public List<String> supportStrategies() {
-        return List.of("consumeCacheEvent");
+        return List.of(STRATEGY_CONSUME_CACHE_EVENT);
     }
 }

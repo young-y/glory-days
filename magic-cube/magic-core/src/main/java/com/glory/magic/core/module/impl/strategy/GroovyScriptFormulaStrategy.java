@@ -26,6 +26,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
+import static com.glory.magic.core.helper.MagicConstant.*;
+
 /**
  * @author YY
  * @date 2026/10/21
@@ -44,11 +46,6 @@ import java.util.*;
 @Component
 public class GroovyScriptFormulaStrategy implements MagicStrategy {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    public static final String CACHE_KEY = "$C_";//get parameter value from cache
-    public static final String CACHE_ALL_KEY = "$CA_";//get parameter value from cache
-    public static final String MAGIC_NODE_KEY = "$N_";//get parameter value from magicNode source
-    public static final String ROOT_NODE_KEY = "$R_";//get parameter value from magicNode source
-
     @Override
     public ResultNode doExecute(RuntimeMetadata metadata) {
         MagicPlanRuleBo rule = metadata.getRule();
@@ -72,28 +69,28 @@ public class GroovyScriptFormulaStrategy implements MagicStrategy {
         Optional.ofNullable( parameters).ifPresent(map->
             map.forEach((key, value)->{
                 if (Objects.nonNull( value)){
-                    if (key.startsWith(CACHE_KEY)){//the cache node must be in the same node or parent nodes
-                        String pk = key.substring(CACHE_KEY.length());
+                    if (key.startsWith(KEY_PREFIX_CACHE_SIGNAL)){//the cache node must be in the same node or parent nodes
+                        String pk = key.substring(KEY_PREFIX_CACHE_SIGNAL.length());
                         String str = value.toString();
-                        if (str.contains(";")){//split cacheEventKey and node input path
-                            String[] keys = str.split(";");//format :cacheEventKey;nodePath
+                        if (str.contains(KEY_PREFIX_CACHE_SIGNAL_SPLIT)){//split cacheEventKey and node input path
+                            String[] keys = str.split(KEY_PREFIX_CACHE_SIGNAL_SPLIT);//format :cacheEventKey;nodePath
                             MagicContext cache = context.getResult().getPublishCacheEventContext(keys[0], keys[1]);
                             putParameters(pk,cache.getNode().getValue(),newParameters);
                         }else {//if it can't provide input,get the first publishCacheEvent
                             MagicContext cache = context.getResult().getPublishCacheEventContext(str,null);
                             putParameters(pk,cache.getNode().getValue(),newParameters);
                         }
-                    }else  if (key.startsWith(CACHE_ALL_KEY)){//usually used on global rule type
-                        String pk = key.substring(CACHE_ALL_KEY.length());
+                    }else  if (key.startsWith(KEY_PREFIX_CACHE_ALL)){//usually used on global rule type
+                        String pk = key.substring(KEY_PREFIX_CACHE_ALL.length());
                         Double sumCacheValues = getSumCacheValues(context, value.toString());
                         putParameters(pk,sumCacheValues,newParameters);
-                    }else if (key.startsWith(MAGIC_NODE_KEY)){//get parameter value from the same node source
-                        String pk = key.substring(MAGIC_NODE_KEY.length());
+                    }else if (key.startsWith(KEY_PREFIX_CURRENT_SOURCE)){//get parameter value from the same node source
+                        String pk = key.substring(KEY_PREFIX_CURRENT_SOURCE.length());
                         String str = value.toString();
                         Object nv = context.getNode().getSource().get(str);
                         putParameters(pk,nv,newParameters);
-                    }else if(key.startsWith(ROOT_NODE_KEY)){
-                        String pk = key.substring(CACHE_KEY.length());
+                    }else if(key.startsWith(KEY_PREFIX_ROOT_NODE)){
+                        String pk = key.substring(KEY_PREFIX_ROOT_NODE.length());
                         String str = value.toString();
                         MagicNode root = context.getNode().getRoot();
                         MagicNode node = root.findNode(str);
@@ -126,6 +123,6 @@ public class GroovyScriptFormulaStrategy implements MagicStrategy {
 
     @Override
     public List<String> supportStrategies() {
-        return List.of("groovyFormula");
+        return List.of(STRATEGY_GROOVY_FORMULA);
     }
 }

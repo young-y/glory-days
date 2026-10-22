@@ -23,7 +23,8 @@ import java.util.regex.Pattern;
 /**
  * @author YY
  * @date 2026/9/21
- * @description: TODO
+ * @description:
+ * exclude some node in normal rules processing,priority is higher than normal rules
  */
 public class MagicPlanFilterBo extends DomainBoWithDynamicFields {
     private Long listId;
@@ -34,7 +35,7 @@ public class MagicPlanFilterBo extends DomainBoWithDynamicFields {
     @Convert(converter = BooleanEnum.BooleanEnumConverter.class)
     private BooleanEnum enabled = BooleanEnum.True;
     @Convert(converter = TypedListStringConverter.class)
-    private List<String> patterns;
+    private List<String> patterns;//exclude node path regular patterns
 
     public Long getListId() {
         return listId;

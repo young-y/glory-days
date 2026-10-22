@@ -19,6 +19,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
+import static com.glory.magic.core.helper.MagicConstant.RULE_FORMAT_FORMAT_TYPE;
+import static com.glory.magic.core.helper.MagicConstant.STRATEGY_NUMBER_FORMAT;
+
 /**
  * @author YY
  * @date 2026/9/20
@@ -44,7 +47,7 @@ public class NumberFormatStrategy implements MagicStrategy {
 
     private DecimalFormat getDecimalFormat(MagicPlanRuleBo rule) {
         DecimalFormat decimalFormat = null;
-        String formatType = rule.getString("formatType", "0");
+        String formatType = rule.getString(RULE_FORMAT_FORMAT_TYPE, "0");
         switch (formatType){//0: number, 1: currency, 2: percentage, other number: String.format
             case "0" -> {// number
                 decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance();
@@ -63,6 +66,6 @@ public class NumberFormatStrategy implements MagicStrategy {
 
     @Override
     public List<String> supportStrategies() {
-        return List.of("numberFormat");
+        return List.of(STRATEGY_NUMBER_FORMAT);
     }
 }
