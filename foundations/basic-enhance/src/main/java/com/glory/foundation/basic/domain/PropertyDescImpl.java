@@ -11,7 +11,6 @@ package com.glory.foundation.basic.domain;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.glory.foundation.basic.type.WithType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.Optional;
  * @description: TODO
  */
 public class PropertyDescImpl implements PropertyDesc {
-    @WithType
+//    @WithType
     protected Map<String, Object> properties = new HashMap<>(8);
 
     @JsonAnyGetter

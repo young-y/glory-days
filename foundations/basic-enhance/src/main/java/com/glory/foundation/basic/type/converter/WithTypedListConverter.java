@@ -21,7 +21,6 @@ import java.util.List;
  * @descprition :
  *
  */
-
 public class WithTypedListConverter implements AttributeConverter<List<Object>, String> {
 
 	/**

@@ -16,8 +16,8 @@
     </properties>
     <modules>
         <module>basic-enhance</module>
-        <module>data-jpa</module>
         <module>rest-client</module>
         <module>condition-delegate</module>
+        <module>data-model</module>
     </modules>
 </project>

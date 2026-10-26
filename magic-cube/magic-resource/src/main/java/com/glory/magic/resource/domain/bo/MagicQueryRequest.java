@@ -8,18 +8,22 @@
 
 package com.glory.magic.resource.domain.bo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.glory.foundation.basic.context.AppContext;
-import com.glory.foundation.data.jpa.domain.page.PageRequest;
 import com.glory.foundation.basic.domain.BooleanEnum;
+import com.glory.foundation.data.model.domain.page.GloryPageRequest;
 import com.glory.magic.core.domain.type.RuleType;
 import jakarta.persistence.Convert;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author YY
  * @date 2026/9/21
  * @description: TODO
  */
-public class MagicQueryRequest extends PageRequest {
+public class MagicQueryRequest extends GloryPageRequest {
     private Long listId;
     private Long planId;//rule
     private String planCode;
@@ -122,4 +126,12 @@ public class MagicQueryRequest extends PageRequest {
         this.srcValue1 = srcValue1;
     }
 
+    @JsonIgnore
+	public PageRequest createPageRequest() {
+		if (CollectionUtils.isEmpty(getPage().getSortProperties())) {
+			return PageRequest.of(getPage().getNumber(), getPage().getSize());
+		} else {
+			return PageRequest.of(getPage().getNumber(), getPage().getSize(), getPage().isDesc() ? Sort.Direction.DESC : Sort.Direction.ASC, getPage().getSortProperties().toArray(String[]::new));
+		}
+	}
 }

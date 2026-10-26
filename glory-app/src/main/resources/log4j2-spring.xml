@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2026. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  ~ Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+  ~ Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+  ~ Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+  ~ Vestibulum commodo. Ut rhoncus gravida arcu.
+  -->
+
+<Configuration status="INFO" >
+    <Properties>
+        <!-- 定义日志格式和路径 -->
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %dmsg%n</Property>
+        <Property name="LOG_DIR">./logs</Property>
+        <Property name="APP_NAME">glory</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- 控制台输出 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <!-- 文件输出（按天滚动） -->
+<!--        <RollingFile name="File" fileName="${LOG_DIR}/${APP_NAME}.log"-->
+<!--                     filePattern="${LOG_DIR}/${APP_NAME}-%d{yyyy-MM-dd}.log.gz">-->
+<!--            <PatternLayout pattern="${LOG_PATTERN}"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="30"/>-->
+<!--        </RollingFile>-->
+
+        <!-- 错误日志单独输出 -->
+<!--        <RollingFile name="ErrorFile" fileName="${LOG_DIR}/${APP_NAME}-error.log"-->
+<!--                     filePattern="${LOG_DIR}/${APP_NAME}-error-%d{yyyy-MM-dd}.log.gz">-->
+<!--            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>-->
+<!--            <PatternLayout pattern="${LOG_PATTERN}"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="30"/>-->
+<!--        </RollingFile>-->
+    </Appenders>
+
+    <Loggers>
+        <!-- 异步日志（需引入Disruptor） -->
+<!--        <AsyncLogger name="com.example" level="DEBUG" additivity="false">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--            <AppenderRef ref="File"/>-->
+<!--            <AppenderRef ref="ErrorFile"/>-->
+<!--        </AsyncLogger>-->
+
+        <!-- 根日志配置 -->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+<!--            <AppenderRef ref="File"/>-->
+        </Root>
+    </Loggers>
+</Configuration>

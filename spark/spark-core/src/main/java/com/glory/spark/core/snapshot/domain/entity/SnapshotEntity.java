@@ -9,7 +9,7 @@
 package com.glory.spark.core.snapshot.domain.entity;
 
 
-import com.glory.foundation.data.jpa.domain.entity.DomainEntityWithDynamicFields;
+import com.glory.foundation.data.model.domain.entity.DomainEntityWithDynamicFields;
 import com.glory.spark.core.domain.type.SourceFrom;
 import com.glory.spark.core.domain.type.TaskStatus;
 import jakarta.persistence.*;

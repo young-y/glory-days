@@ -10,7 +10,7 @@ package com.glory.spark.content.domain.bo;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
+import com.glory.foundation.data.model.domain.bo.DomainBoWithDynamicFields;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Transient;
 

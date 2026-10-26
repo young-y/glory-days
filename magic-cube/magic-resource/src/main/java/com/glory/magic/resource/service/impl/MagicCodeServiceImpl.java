@@ -10,7 +10,7 @@ package com.glory.magic.resource.service.impl;
 
 import com.glory.foundation.basic.context.AppContext;
 import com.glory.foundation.basic.domain.GloryResponse;
-import com.glory.foundation.data.jpa.domain.converter.DomainFactory;
+import com.glory.foundation.data.model.domain.converter.DomainFactory;
 import com.glory.magic.core.domain.code.MagicCodeBo;
 import com.glory.magic.core.domain.code.MagicCodeItemBo;
 import com.glory.magic.resource.domain.bo.MagicQueryRequest;
@@ -137,7 +137,7 @@ public class MagicCodeServiceImpl implements MagicCodeService {
         };
         if (request.getPage() != null){
             response.initPage(request.getPage());
-            Page<MagicCodeEntity> p = codeRepository.findAll(spec, request.getPage().createPageRequest());
+            Page<MagicCodeEntity> p = codeRepository.findAll(spec, request.createPageRequest());
             response.getPage().setTotalElements(p.getTotalElements());
             response.getPage().setTotalPages(p.getTotalPages());
             response.getPage().setNext(p.hasNext());
@@ -217,7 +217,7 @@ public class MagicCodeServiceImpl implements MagicCodeService {
         };
         if (request.getPage() != null){
             response.initPage(request.getPage());
-            Page<MagicCodeItemEntity> p = itemRepository.findAll(spec, request.getPage().createPageRequest());
+            Page<MagicCodeItemEntity> p = itemRepository.findAll(spec, request.createPageRequest());
             response.getPage().setTotalElements(p.getTotalElements());
             response.getPage().setTotalPages(p.getTotalPages());
             response.getPage().setNext(p.hasNext());

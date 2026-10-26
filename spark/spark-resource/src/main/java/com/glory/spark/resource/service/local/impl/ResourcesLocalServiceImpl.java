@@ -9,8 +9,8 @@
 package com.glory.spark.resource.service.local.impl;
 
 
-import com.glory.foundation.data.jpa.domain.converter.DomainFactory;
-import com.glory.foundation.data.jpa.domain.entity.BeanTuple;
+import com.glory.foundation.data.model.domain.converter.DomainFactory;
+import com.glory.foundation.data.model.domain.entity.BeanTuple;
 import com.glory.spark.resource.domain.bo.*;
 import com.glory.spark.resource.domain.entity.*;
 import com.glory.spark.resource.repository.*;

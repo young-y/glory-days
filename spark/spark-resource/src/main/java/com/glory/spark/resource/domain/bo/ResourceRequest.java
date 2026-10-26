@@ -9,11 +9,13 @@
 package com.glory.spark.resource.domain.bo;
 
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.glory.foundation.basic.context.AppContext;
-import com.glory.foundation.data.jpa.domain.page.PageRequest;
+import com.glory.foundation.data.model.domain.page.GloryPageRequest;
 import com.glory.spark.resource.domain.type.ActivityStatus;
 import jakarta.persistence.Convert;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -23,7 +25,7 @@ import org.springframework.util.StringUtils;
  *
  */
 
-public class ResourceRequest extends PageRequest {
+public class ResourceRequest extends GloryPageRequest {
 	private String code;
 	private String type;
 	@Convert(converter = ActivityStatus.ActivityStatusConverter.class)
@@ -60,5 +62,14 @@ public class ResourceRequest extends PageRequest {
 
 	public void setTenant(String tenant) {
 		this.tenant = tenant;
+	}
+
+	@JsonIgnore
+	public org.springframework.data.domain.PageRequest createPageRequest() {
+		if (CollectionUtils.isEmpty(getPage().getSortProperties())) {
+			return org.springframework.data.domain.PageRequest.of(getPage().getNumber(), getPage().getSize());
+		} else {
+			return org.springframework.data.domain.PageRequest.of(getPage().getNumber(), getPage().getSize(), getPage().isDesc() ? Sort.Direction.DESC : Sort.Direction.ASC, getPage().getSortProperties().toArray(String[]::new));
+		}
 	}
 }

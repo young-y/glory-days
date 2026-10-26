@@ -8,7 +8,11 @@
 
 package com.glory.spark.content.domain.bo;
 
-import com.glory.foundation.data.jpa.domain.page.PageRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.glory.foundation.data.model.domain.page.GloryPageRequest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +24,7 @@ import java.util.List;
  *
  */
 
-public class SparkContentRequest extends PageRequest {
+public class SparkContentRequest extends GloryPageRequest {
 	private Long listId;
 	private String sparkCode;
 	private String taskCode;
@@ -137,5 +141,14 @@ public class SparkContentRequest extends PageRequest {
 
 	public void setTemplateCode(String templateCode) {
 		this.templateCode = templateCode;
+	}
+
+	@JsonIgnore
+	public PageRequest createPageRequest() {
+		if (CollectionUtils.isEmpty(getPage().getSortProperties())) {
+			return PageRequest.of(getPage().getNumber(), getPage().getSize());
+		} else {
+			return PageRequest.of(getPage().getNumber(), getPage().getSize(), getPage().isDesc() ? Sort.Direction.DESC : Sort.Direction.ASC, getPage().getSortProperties().toArray(String[]::new));
+		}
 	}
 }

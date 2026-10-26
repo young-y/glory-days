@@ -10,7 +10,7 @@ package com.glory.spark.content.service.local.impl;
 
 
 import com.glory.foundation.client.service.impl.AbstractClientService;
-import com.glory.foundation.data.jpa.domain.converter.DomainFactory;
+import com.glory.foundation.data.model.domain.converter.DomainFactory;
 import com.glory.spark.content.domain.bo.*;
 import com.glory.spark.content.domain.entity.SparkContentEntity;
 import com.glory.spark.content.domain.entity.SparkContentTrackEntity;
@@ -132,7 +132,7 @@ public class SparkContentLocalServiceImpl extends AbstractClientService implemen
 			}
 		};
 		if (null !=request.getPage()) {
-			Page<SparkContentEntity> entityPage = repository.findAll(spec, request.getPage().createPageRequest());
+			Page<SparkContentEntity> entityPage = repository.findAll(spec, request.createPageRequest());
 			response.initPage(request.getPage());
 			response.setElements(entityPage.getContent().stream().map(e-> DomainFactory.convert(e,SparkContentBo.class)).toList());
 			response.getPage().setTotalPages(entityPage.getTotalPages());
@@ -208,7 +208,7 @@ public class SparkContentLocalServiceImpl extends AbstractClientService implemen
 			}
 		};
 		if (null !=request.getPage()) {
-			Page<SparkContentTrackEntity> entityPage = trackRepository.findAll(spec, request.getPage().createPageRequest());
+			Page<SparkContentTrackEntity> entityPage = trackRepository.findAll(spec, request.createPageRequest());
 			response.initPage(request.getPage());
 			response.setElements(entityPage.getContent().stream().map(e-> DomainFactory.convert(e,SparkContentTrackBo.class)).toList());
 			response.getPage().setTotalPages(entityPage.getTotalPages());

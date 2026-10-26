@@ -9,6 +9,7 @@
 package com.glory.app.domain;
 
 import com.glory.foundation.basic.crypto.CryptoType;
+import com.glory.foundation.basic.crypto.annotation.Secret;
 import com.glory.foundation.basic.desensitize.Desensitize;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public class DesensitizeObject {
     private LocalDateTime birthday;
     @Desensitize(algorithm = CryptoType.AES,withPrefix = true)
     private String email;
+    @Desensitize(algorithm = CryptoType.DES,withPrefix = true)
     private String mobile;
 
     public String getName() {

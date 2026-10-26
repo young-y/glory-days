@@ -10,8 +10,8 @@ package com.glory.spark.core.snapshot.service.local.impl;
 
 
 import com.glory.foundation.basic.context.AppContext;
-import com.glory.foundation.data.jpa.domain.converter.DomainFactory;
-import com.glory.foundation.data.jpa.domain.entity.BeanTuple;
+import com.glory.foundation.data.model.domain.converter.DomainFactory;
+import com.glory.foundation.data.model.domain.entity.BeanTuple;
 import com.glory.spark.core.domain.type.TaskStatus;
 import com.glory.spark.core.snapshot.domain.bo.SnapshotBo;
 import com.glory.spark.core.snapshot.domain.bo.SnapshotDetailBo;
@@ -131,7 +131,7 @@ public class SnapshotLocalServiceImpl implements SnapshotLocalService {
 			}
 		};
 		if (null != request.getPage()) {
-			Page<SnapshotEntity> entityPage = snapshotRepository.findAll(spec, request.getPage().createPageRequest());
+			Page<SnapshotEntity> entityPage = snapshotRepository.findAll(spec, request.createPageRequest());
 			response.initPage(request.getPage());
 			response.getPage().setTotalElements(entityPage.getTotalElements());
 			response.getPage().setTotalPages(entityPage.getTotalPages());
@@ -231,7 +231,7 @@ public class SnapshotLocalServiceImpl implements SnapshotLocalService {
 			}
 		};
 		if (null != request.getPage()) {
-			Page<SnapshotDetailEntity> entityPage = detailRepository.findAll(spec, request.getPage().createPageRequest());
+			Page<SnapshotDetailEntity> entityPage = detailRepository.findAll(spec, request.createPageRequest());
 			response.initPage(request.getPage());
 			response.setElements(entityPage.getContent().stream().map(e-> DomainFactory.convert(e,SnapshotDetailBo.class)).toList());
 			response.getPage().setNext(entityPage.hasNext());

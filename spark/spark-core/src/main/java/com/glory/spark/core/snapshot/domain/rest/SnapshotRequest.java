@@ -9,11 +9,15 @@
 package com.glory.spark.core.snapshot.domain.rest;
 
 
-import com.glory.foundation.data.jpa.domain.page.PageRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.glory.foundation.data.model.domain.page.GloryPageRequest;
 import com.glory.spark.core.domain.type.RetryStrategy;
 import com.glory.spark.core.domain.type.SourceFrom;
 import com.glory.spark.core.domain.type.TaskStatus;
 import jakarta.persistence.Convert;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +29,7 @@ import java.util.List;
  *
  */
 
-public class SnapshotRequest extends PageRequest {
+public class SnapshotRequest extends GloryPageRequest {
 	private Long snapshotId;
 	private String sparkCode;
 	private String appName;
@@ -157,5 +161,14 @@ public class SnapshotRequest extends PageRequest {
 
 	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
+	}
+
+	@JsonIgnore
+	public PageRequest createPageRequest() {
+		if (CollectionUtils.isEmpty(getPage().getSortProperties())) {
+			return PageRequest.of(getPage().getNumber(), getPage().getSize());
+		} else {
+			return PageRequest.of(getPage().getNumber(), getPage().getSize(), getPage().isDesc() ? Sort.Direction.DESC : Sort.Direction.ASC, getPage().getSortProperties().toArray(String[]::new));
+		}
 	}
 }

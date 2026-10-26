@@ -9,8 +9,8 @@
 package com.glory.spark.core.snapshot.domain.converter;
 
 
-import com.glory.foundation.data.jpa.domain.converter.DomainConverter;
-import com.glory.foundation.data.jpa.domain.converter.DomainFactory;
+import com.glory.foundation.data.model.domain.converter.DomainConverter;
+import com.glory.foundation.data.model.domain.converter.DomainFactory;
 import com.glory.spark.core.snapshot.domain.bo.SnapshotBo;
 import com.glory.spark.core.snapshot.domain.bo.SnapshotDetailBo;
 import com.glory.spark.core.snapshot.domain.entity.SnapshotDetailEntity;

@@ -9,8 +9,8 @@
 package com.glory.magic.resource.domain.converter;
 
 import com.glory.foundation.basic.context.AppContext;
-import com.glory.foundation.data.jpa.domain.converter.DomainConverter;
-import com.glory.foundation.data.jpa.domain.converter.DomainFactory;
+import com.glory.foundation.data.model.domain.converter.DomainConverter;
+import com.glory.foundation.data.model.domain.converter.DomainFactory;
 import com.glory.magic.core.domain.code.MagicCodeBo;
 import com.glory.magic.core.domain.code.MagicCodeItemBo;
 import com.glory.magic.core.domain.plan.MagicPlanFilterBo;

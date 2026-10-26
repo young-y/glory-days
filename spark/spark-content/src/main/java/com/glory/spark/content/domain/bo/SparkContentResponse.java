@@ -9,7 +9,7 @@
 package com.glory.spark.content.domain.bo;
 
 
-import com.glory.foundation.data.jpa.domain.page.PageResponse;
+import com.glory.foundation.data.model.domain.page.PageResponse;
 
 /**
  * @author : YY

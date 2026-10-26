@@ -8,8 +8,8 @@
 
 package com.glory.magic.core.domain.code;
 
-import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
 import com.glory.foundation.basic.domain.BooleanEnum;
+import com.glory.foundation.data.model.domain.bo.DomainBoWithDynamicFields;
 import jakarta.persistence.Convert;
 
 /**

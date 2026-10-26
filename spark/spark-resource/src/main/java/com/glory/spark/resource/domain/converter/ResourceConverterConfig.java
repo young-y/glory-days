@@ -10,7 +10,7 @@ package com.glory.spark.resource.domain.converter;
 
 
 import com.glory.foundation.basic.context.AppContext;
-import com.glory.foundation.data.jpa.domain.converter.DomainConverter;
+import com.glory.foundation.data.model.domain.converter.DomainConverter;
 import com.glory.spark.resource.domain.bo.*;
 import com.glory.spark.resource.domain.entity.*;
 import org.springframework.beans.BeanUtils;

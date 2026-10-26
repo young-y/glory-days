@@ -10,7 +10,7 @@ package com.glory.magic.resource.service.impl;
 
 import com.glory.foundation.basic.context.AppContext;
 import com.glory.foundation.basic.domain.BooleanEnum;
-import com.glory.foundation.data.jpa.domain.converter.DomainFactory;
+import com.glory.foundation.data.model.domain.converter.DomainFactory;
 import com.glory.magic.core.domain.plan.MagicPlanBo;
 import com.glory.magic.core.domain.plan.MagicPlanFilterBo;
 import com.glory.magic.core.domain.plan.MagicPlanRuleBo;
@@ -145,7 +145,7 @@ public class MagicPlanServiceImpl implements MagicPlanService {
         };
         if (null != request.getPage()){
             response.initPage(request.getPage());
-            Page<MagicPlanEntity> planEntities = planRepository.findAll(spec, request.getPage().createPageRequest());
+            Page<MagicPlanEntity> planEntities = planRepository.findAll(spec, request.createPageRequest());
             response.getPage().setTotalElements(planEntities.getTotalElements());
             response.getPage().setTotalPages(planEntities.getTotalPages());
             response.getPage().setNext(planEntities.hasNext());
@@ -226,7 +226,7 @@ public class MagicPlanServiceImpl implements MagicPlanService {
         };
         if (null != request.getPage()){//page query
             response.initPage(request.getPage());
-            Page<MagicPlanRuleEntity> ruleEntities = planRuleRepository.findAll(spec, request.getPage().createPageRequest());
+            Page<MagicPlanRuleEntity> ruleEntities = planRuleRepository.findAll(spec, request.createPageRequest());
             response.getPage().setTotalElements(ruleEntities.getTotalElements());
             response.getPage().setTotalPages(ruleEntities.getTotalPages());
             response.getPage().setNext(ruleEntities.hasNext());
@@ -284,7 +284,7 @@ public class MagicPlanServiceImpl implements MagicPlanService {
         };
         if (null != request.getPage()){
             response.initPage(request.getPage());
-            Page<MagicPlanFilterEntity> planEntities = planFilterRepository.findAll(spec, request.getPage().createPageRequest());
+            Page<MagicPlanFilterEntity> planEntities = planFilterRepository.findAll(spec, request.createPageRequest());
             response.getPage().setTotalElements(planEntities.getTotalElements());
             response.getPage().setTotalPages(planEntities.getTotalPages());
             response.getPage().setNext(planEntities.hasNext());

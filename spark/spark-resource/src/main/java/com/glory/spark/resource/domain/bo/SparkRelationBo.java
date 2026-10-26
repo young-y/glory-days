@@ -9,7 +9,7 @@
 package com.glory.spark.resource.domain.bo;
 
 
-import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
+import com.glory.foundation.data.model.domain.bo.DomainBoWithDynamicFields;
 
 /**
  * @author : YY

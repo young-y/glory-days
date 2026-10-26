@@ -10,7 +10,7 @@ package com.glory.spark.core.snapshot.domain.bo;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
+import com.glory.foundation.data.model.domain.bo.DomainBoWithDynamicFields;
 import com.glory.spark.core.domain.type.RetryStrategy;
 import com.glory.spark.core.domain.type.SourceFrom;
 import com.glory.spark.core.domain.type.TaskStatus;

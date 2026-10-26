@@ -11,8 +11,8 @@ package com.glory.spark.content.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.glory.foundation.basic.type.converter.WithTypeMapConverter;
-import com.glory.foundation.data.jpa.converter.TypedListStringConverter;
-import com.glory.foundation.data.jpa.domain.entity.DomainEntityWithDynamicFields;
+import com.glory.foundation.data.model.converter.TypedListStringConverter;
+import com.glory.foundation.data.model.domain.entity.DomainEntityWithDynamicFields;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 

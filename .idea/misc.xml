@@ -17,6 +17,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/foundations/data-jpa/pom.xml" />
         <option value="$PROJECT_DIR$/magic/pom.xml" />
         <option value="$PROJECT_DIR$/spark/spark-resources/pom.xml" />
       </set>

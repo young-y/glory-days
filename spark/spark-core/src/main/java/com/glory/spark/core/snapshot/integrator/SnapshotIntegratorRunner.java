@@ -9,7 +9,7 @@
 package com.glory.spark.core.snapshot.integrator;
 
 
-import com.glory.foundation.data.jpa.domain.bo.DomainBo;
+import com.glory.foundation.data.model.domain.bo.DomainBo;
 import com.glory.spark.core.component.integrator.IntegratorRunner;
 import com.glory.spark.core.domain.SparkResult;
 import com.glory.spark.core.domain.SparkTaskDesc;

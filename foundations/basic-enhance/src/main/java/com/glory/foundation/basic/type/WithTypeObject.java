@@ -12,9 +12,14 @@ package com.glory.foundation.basic.type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.Assert;
 
 import java.beans.PropertyDescriptor;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * @author : YY
@@ -24,11 +29,31 @@ import java.util.Map;
  */
 
 public class WithTypeObject {
-	//	private String className;
 	private Class<?> rawClass;
 	private Object rawObject;
+	private static final Set<Class <?>> whiteList = new HashSet<>();
+	static {
+		whiteList.add(String.class);
+		whiteList.add(Integer.class);
+		whiteList.add(Long.class);
+		whiteList.add(Float.class);
+		whiteList.add(Double.class);
+		whiteList.add(Boolean.class);
+		whiteList.add(Byte.class);
+		whiteList.add(Character.class);
+		whiteList.add(Number.class);
+		whiteList.add(Short.class);
+		whiteList.add(BigInteger.class);
+		whiteList.add(CharSequence.class);
+		whiteList.add(BigDecimal.class);
+		whiteList.add(LocalDate.class);
+		whiteList.add(LocalDateTime.class);
+		whiteList.add(Date.class);
+	}
+
 
 	public void setRawClass(Class<?> rawClass) {
+		Assert.isTrue(validate(rawClass), "WithType must be used in conjunction with WithTypeSupport.");
 		this.rawClass = rawClass;
 	}
 
@@ -47,9 +72,13 @@ public class WithTypeObject {
 	@JsonIgnore
 	public static WithTypeObject create(@Nonnull Object obj) {
 		WithTypeObject type = new WithTypeObject();
-		type.rawClass = obj.getClass();
-		type.rawObject = obj;
+		type.setRawClass(obj.getClass());
+		type.setRawObject( obj);
 		return type;
+	}
+
+	private boolean validate(@Nonnull Class<?> clazz) {
+		return whiteList.contains(clazz)||clazz.getAnnotation(WithTypeSupport.class)!=null;
 	}
 
 	@SuppressWarnings("unchecked")

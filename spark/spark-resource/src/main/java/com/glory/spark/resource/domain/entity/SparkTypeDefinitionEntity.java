@@ -9,7 +9,7 @@
 package com.glory.spark.resource.domain.entity;
 
 
-import com.glory.foundation.data.jpa.domain.entity.DomainEntityWithDynamicFields;
+import com.glory.foundation.data.model.domain.entity.DomainEntityWithDynamicFields;
 import com.glory.foundation.basic.domain.BooleanEnum;
 import com.glory.spark.resource.domain.type.ActivityStatus;
 import jakarta.persistence.*;

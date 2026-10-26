@@ -20,8 +20,30 @@ import java.lang.annotation.Target;
 /**
  * @author : YY
  * @date : 2025/11/28
- * @descprition :
- *
+ * @descprition
+ * Because the type is erased during serialization, when deserialization does not specify a type,
+ * the object will be serialized as a LinkedHashMap.
+ * UsingWithType allows the type information to be saved during serialization,
+ * but there may be security issues during deserialization.
+ * Therefore, when using withType, the target object must be accompanied by withTypeSupport to ensure type safety.
+ * Exception message is 'WithType must be used in conjunction with WithTypeSupport.'
+ * eg :List<Car> cars; add @WithTypeSupport to Car class
+ * The following types in the whitelist do not require addition.
+ *      whiteList.add(String.class);
+ * 		whiteList.add(Integer.class);
+ * 		whiteList.add(Long.class);
+ * 		whiteList.add(Float.class);
+ * 		whiteList.add(Double.class);
+ * 		whiteList.add(Boolean.class);
+ * 		whiteList.add(Byte.class);
+ * 		whiteList.add(Character.class);
+ * 		whiteList.add(Short.class);
+ * 		whiteList.add(BigInteger.class);
+ * 		whiteList.add(CharSequence.class);
+ * 		whiteList.add(BigDecimal.class);
+ * 		whiteList.add(LocalDate.class);
+ * 		whiteList.add(LocalDateTime.class);
+ * 		whiteList.add(Date.class);
  */
 @JacksonAnnotationsInside
 @Retention(RetentionPolicy.RUNTIME)

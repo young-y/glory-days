@@ -10,6 +10,7 @@ package com.glory.spark.core.snapshot.domain.bo;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.glory.foundation.data.model.domain.bo.DomainBoWithDynamicFields;
 import com.glory.spark.core.domain.type.RetryStrategy;
 import com.glory.spark.core.domain.type.SourceFrom;
 import com.glory.spark.core.domain.type.TaskStatus;
@@ -28,7 +29,7 @@ import java.util.Optional;
  *
  */
 
-public class SnapshotItemBo {
+public class SnapshotItemBo extends DomainBoWithDynamicFields {
 	private Long detailId;
 	private Long snapshotId;
 	private String sparkCode;
@@ -205,5 +206,10 @@ public class SnapshotItemBo {
 		}
 		this.properties.put(key, value);
 		return this;
+	}
+
+	@Override
+	public Long getPrimaryId() {
+		return getDetailId();
 	}
 }

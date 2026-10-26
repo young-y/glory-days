@@ -10,7 +10,7 @@ package com.glory.spark.resource.domain.bo;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
+import com.glory.foundation.data.model.domain.bo.DomainBoWithDynamicFields;
 import com.glory.foundation.basic.domain.BooleanEnum;
 import com.glory.spark.resource.domain.type.ActivityStatus;
 import jakarta.persistence.Convert;

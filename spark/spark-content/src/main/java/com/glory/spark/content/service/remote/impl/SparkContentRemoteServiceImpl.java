@@ -51,7 +51,9 @@ public class SparkContentRemoteServiceImpl extends AbstractClientService impleme
 	private static  final String SPARK_HTTP_HOST = "spark.http.host.";
 	@Autowired
 	private ContentHelper helper;
+
 	/**
+	 *
 	 * @param contentBo
 	 * @return
 	 */

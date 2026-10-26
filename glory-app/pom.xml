@@ -15,7 +15,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.version>3.3.5</spring.boot.version>
+        <spring.boot.version>3.5.6</spring.boot.version>
         <persistence.version>3.1.0</persistence.version>
         <foundation.version>1.0-SNAPSHOT</foundation.version>
         <mysql.version>8.0.33</mysql.version>
@@ -27,6 +27,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <version>${spring.boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.glory.foundation.basic</groupId>
@@ -34,8 +51,8 @@
             <version>${foundation.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.glory.foundation.data.jpa</groupId>
-            <artifactId>data-jpa</artifactId>
+            <groupId>com.glory.foundation.data.model</groupId>
+            <artifactId>data-model</artifactId>
             <version>${foundation.version}</version>
         </dependency>
         <dependency>
@@ -53,11 +70,6 @@
             <artifactId>groovy</artifactId>
             <version>3.0.21</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.liquibase</groupId>-->
-<!--            <artifactId>liquibase-core</artifactId>-->
-<!--            <version>${liquibase.core.version}</version>-->
-<!--        </dependency>-->
     </dependencies>
 
 </project>

@@ -10,7 +10,7 @@ package com.glory.magic.core.domain.plan;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.glory.foundation.basic.domain.BooleanEnum;
-import com.glory.foundation.data.jpa.domain.bo.DomainBoWithDynamicFields;
+import com.glory.foundation.data.model.domain.bo.DomainBoWithDynamicFields;
 import com.glory.magic.core.domain.node.MagicNode;
 import com.glory.magic.core.domain.type.RuleType;
 import com.glory.magic.core.helper.MagicHelper;

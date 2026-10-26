@@ -8,7 +8,7 @@
 
 package com.glory.magic.resource.domain.bo;
 
-import com.glory.foundation.data.jpa.domain.page.PageResponse;
+import com.glory.foundation.data.model.domain.page.PageResponse;
 
 import java.util.List;
 

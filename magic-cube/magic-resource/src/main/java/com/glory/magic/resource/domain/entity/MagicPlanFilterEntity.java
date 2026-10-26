@@ -8,8 +8,8 @@
 
 package com.glory.magic.resource.domain.entity;
 
-import com.glory.foundation.data.jpa.converter.TypedListStringConverter;
-import com.glory.foundation.data.jpa.domain.entity.DomainEntityWithDynamicFields;
+import com.glory.foundation.data.model.converter.TypedListStringConverter;
+import com.glory.foundation.data.model.domain.entity.DomainEntityWithDynamicFields;
 import com.glory.foundation.basic.domain.BooleanEnum;
 import jakarta.persistence.*;
 

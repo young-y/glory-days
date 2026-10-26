@@ -9,7 +9,7 @@
 package com.glory.spark.content.domain.converter;
 
 
-import com.glory.foundation.data.jpa.domain.converter.DomainConverter;
+import com.glory.foundation.data.model.domain.converter.DomainConverter;
 import com.glory.spark.content.domain.bo.SparkContentBo;
 import com.glory.spark.content.domain.bo.SparkContentTrackBo;
 import com.glory.spark.content.domain.entity.SparkContentEntity;

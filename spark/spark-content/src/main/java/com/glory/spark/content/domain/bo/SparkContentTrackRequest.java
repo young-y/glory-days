@@ -9,8 +9,11 @@
 package com.glory.spark.content.domain.bo;
 
 
-
-import com.glory.foundation.data.jpa.domain.page.PageRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.glory.foundation.data.model.domain.page.GloryPageRequest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +25,7 @@ import java.util.List;
  *
  */
 
-public class SparkContentTrackRequest extends PageRequest {
+public class SparkContentTrackRequest extends GloryPageRequest {
 	private Long trackId;
 	private Long contentId;
 	private String serialId;
@@ -103,5 +106,13 @@ public class SparkContentTrackRequest extends PageRequest {
 
 	public void setTrackTime(LocalDateTime trackTime) {
 		this.trackTime = trackTime;
+	}
+	@JsonIgnore
+	public PageRequest createPageRequest() {
+		if (CollectionUtils.isEmpty(getPage().getSortProperties())) {
+			return PageRequest.of(getPage().getNumber(), getPage().getSize());
+		} else {
+			return PageRequest.of(getPage().getNumber(), getPage().getSize(), getPage().isDesc() ? Sort.Direction.DESC : Sort.Direction.ASC, getPage().getSortProperties().toArray(String[]::new));
+		}
 	}
 }
