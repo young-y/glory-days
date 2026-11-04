@@ -1,0 +1,14 @@
+{
+    "type":"object",
+    "$comment": "MagicCodeItemBo",
+    "properties": {
+        "tenant":{"type":"string","description": "tenant code"},
+        "enabled":{"type":"boolean","default":true,"description": "the codeItem active status"},
+        "name":{"type":"string","description": "code item name"},
+        "srcValue":{"type":"string","description": "srcValue, query condition"},
+        "srcValue1":{"type":"string","description": "srcValue1 ,query condition1"},
+        "destValue":{"type":"string","default":"","description": "the result value"},
+        "description":{"type":"string","description": "code item description"}
+    },
+    "required": ["name","srcValue","destValue"]
+}

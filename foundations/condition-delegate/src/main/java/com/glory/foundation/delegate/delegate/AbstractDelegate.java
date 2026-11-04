@@ -36,25 +36,12 @@ public class AbstractDelegate<S extends DelegateAdapter> implements GloryDelegat
     protected List<S> targets;
 
     protected ApplicationContext applicationContext;
-//    protected Comparator<S> comparator = null;
-
 
     @SuppressWarnings({"unchecked"})
     protected Class<S> getActualType() {
         ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
         return (Class<S>) type.getActualTypeArguments()[0];
     }
-
-//    protected Comparator<S> getComparator() {
-//        return comparator = (null != comparator ? comparator : (o1, o2) -> {
-//            Order od1 = o1.getClass().getAnnotation(Order.class);
-//            Order od2 = o2.getClass().getAnnotation(Order.class);
-//            int s1 = null != od1 ? od1.value() : 100;
-//            int s2 = null != od2 ? od2.value() : 100;
-//            return Comparators.comparable().compare(s1, s2);
-//        });
-//    }
-
 
     protected BiFunction<List<S>,DelegateContext,List<S>> getSelector(){
         return (ts,context)-> ts.stream().filter(t->t.accept(context)).toList();
@@ -63,7 +50,6 @@ public class AbstractDelegate<S extends DelegateAdapter> implements GloryDelegat
     protected Supplier<S> getDefaultSelector() {
         return ()->targets.getLast();
     }
-
 
     @Override
     public S delegate(DelegateContext context) {
@@ -76,7 +62,6 @@ public class AbstractDelegate<S extends DelegateAdapter> implements GloryDelegat
         Assert.notEmpty(targets,"target delegate services is empty!");
         return getSelector().apply(targets,context);
     }
-
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

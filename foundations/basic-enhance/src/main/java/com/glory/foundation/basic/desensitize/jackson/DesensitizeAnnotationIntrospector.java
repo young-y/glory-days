@@ -11,7 +11,7 @@ package com.glory.foundation.basic.desensitize.jackson;
 
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-import com.glory.foundation.basic.crypto.CryptoContext;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import com.glory.foundation.basic.desensitize.DesensitizeHelper;
 
 
@@ -35,9 +35,9 @@ public class DesensitizeAnnotationIntrospector extends JacksonAnnotationIntrospe
 	@Override
 	public Object findSerializationConverter(Annotated a) {
 		if (DesensitizeHelper.match(a)){
-			CryptoContext context = DesensitizeHelper.createContext(a);
-			if (null != context){
-				return new DesensitizeConverter(context);
+			CryptoWrapper wrapper = DesensitizeHelper.createContext(a);
+			if (null != wrapper){
+				return new DesensitizeConverter(wrapper);
 			}
 		}
 		return super.findSerializationConverter(a);

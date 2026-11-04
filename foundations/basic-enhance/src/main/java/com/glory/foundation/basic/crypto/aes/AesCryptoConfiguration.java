@@ -9,8 +9,10 @@
 package com.glory.foundation.basic.crypto.aes;
 
 
+import com.glory.foundation.basic.crypto.CryptoType;
 import com.glory.foundation.basic.crypto.Decryptor;
 import com.glory.foundation.basic.crypto.Encryptor;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,26 +49,28 @@ public class AesCryptoConfiguration {
 
 	@Bean("aesEncryptor")
 	@ConditionalOnMissingBean(name = "aesEncryptor")
-	public Encryptor<String> aesEncryptor(){
-		return str->{
-			if (StringUtils.hasLength(str)){
+	public Encryptor<CryptoWrapper> aesEncryptor(){
+		return wrapper->{
+			String text = wrapper.getText();
+			if (StringUtils.hasLength(text)){
 				try{
 					Cipher cipher = getCipher(Cipher.ENCRYPT_MODE);
-					byte[] bytes = cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
+					byte[] bytes = cipher.doFinal(text.getBytes(StandardCharsets.UTF_8));
 					return Base64.getEncoder().encodeToString(bytes);
 				}catch (Throwable t){
-					logger.warn(">> AES encrypt[{}] exception:",str,t);
+					logger.warn(">> AES encrypt[{}] exception:",text,t);
 					throw new RuntimeException(t);
 				}
 			}
-			return str;
+			return text;
 		};
 	}
 
 	@Bean("aesDecryptor")
 	@ConditionalOnMissingBean(name = "aesDecryptor")
-	public Decryptor aesDecryptor(){
-		return ciphertext -> {
+	public Decryptor<CryptoWrapper> aesDecryptor(){
+		return wrapper -> {
+			String ciphertext= wrapper.getCipherText();
 			if (StringUtils.hasLength(ciphertext)){
 				try{
 					Cipher cipher = getCipher(Cipher.DECRYPT_MODE);

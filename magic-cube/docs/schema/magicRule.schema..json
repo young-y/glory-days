@@ -1,0 +1,113 @@
+{
+    "type":"object",
+    "$comment": "MagicPlanRuleBo",
+    "properties": {
+        "name":{"type":"string","description": "rule name"},
+        "ailas":{"type":"string","description": "key name  of result map,if need assigned name"},
+        "input":{
+            "type":"string"
+            ,"description": "data source node path,Separate each level with a # symbol,'name-*' is list,endwith '#*' the final layer of fuzzy matching",
+            "examples": ["aaa#bbb#ccc","root#list-*#nodeName","aaa#bbb#*"]
+        },
+        "output":{
+            "type":"string","description": "the result node path",
+            "examples": ["aaa#bbb#ccc","root#list-*#nodeName","aaa#bbb#*","node1#${name}-*#key"]
+        },
+        "formula":{"type":"string","description": "the calculate formula if stategy need calculate"},
+        "format":{"type":"string","description": "define output string format in format strategy,eg:dateFormat,stringFormat,numberFormat"},
+        "scala":{"type":"integer","description": "keed the decimal places when output number"},
+        "type":{"type":"integer","enum": [0,1,2],"default":0,"description": "0:normal rule,1:dynamic ,2:global rule"},
+        "description":{"type":"string","description": "rule description"},
+        "strategy":{"type":"string","description": "rule strategy"},
+        "stepStrategy":{"type":"array","items": {"type":"string","description": "next strategy"}},
+        "value":{"type":"string","description": "fixedValue strategy ,assigned a value"},
+        "priority":{"type":"integer","default":10,"description": "rule sorted asc by priority,if exist more same rule strategy, get first"},
+        "excludeNodes":{"type":"array","items": {"type":"string"},"description": "when last digit fuzzy matching ,exculde nodes"},
+        "tenant":{"type":"string","description": "tenant code"},
+        "enabled":{"type":"boolean","default":true,"description": "the rule active status"},
+        "cacheEventKey":{"type":"string","description":"cache event"},
+        "parameters":{"type":"object" ,"additionalProperties":{"type":"object"}}
+    },
+    "required": ["name","input","output","strategy"],
+    "allof":[
+        {
+            "if":{
+                "properties":{
+                    "strategy":{"const":"fixedValue"}
+                },
+                "required":["value"]
+            }
+        },
+        {
+             "if":{
+                "properties":{
+                    "strategy":{"const":"codeMap"}
+                },
+                "additionalProperties":{"srcValue1Key":{"type":"string","description":"second condition"}},
+                "required":["format"]
+            }
+        },
+        {
+            "if":{
+                "properties":{
+                    "strategy":{"const":"dateFormat"}
+                },
+                "additionalProperties":{"dateFormat":{"type":"string","description":"eg:yyyy-MM-dd'T'HH:mm:ss"}},
+                "required":["format"],
+                "$comment":"date output format eg:yyyy年MM月dd日"
+            }
+        },
+        {
+            "if":{
+                "properties":{"strategy":{"const":"numberFormat"}},
+                "additionalProperties":{"formatType":{"type":"integer","enum":[0,1,2],"default":0}},
+                "required":["format"],
+                "$comment":"number output format eg:#,###.00,"
+            }
+        },
+        {
+            "if":{
+                "properties":{
+                    "strategy":{"const":"stringFormat"},
+                    "format":{"type":"string","enum":["upper","lower","first","mask","encrypt"]}
+                },
+                "additionalProperties":{
+                    "algorithm":{"type":"string","enum":["AES","DES","RSA","BASE64"],"default":"AES","description":"format = encrypt"},
+                    "pattern":{"type":"string","description":"format=mask,mask string model,eg:^(.{4}).*$}"},
+                    "replacement":{"type":"string","description":"format=mask,replace string,eg:$1****"},
+                    "minLength":{"type":"integer","description":"format=mask,if str.length < minLength,return minLengthStr"},
+                    "minLengthStr":{"type":"string","description":"format=mask,if str.length < minLength,return minLengthStr"}
+                },
+                "required":["format"]
+
+            }
+        },
+        {
+            "if":{
+                "properties":{
+                    "strategy":{"const":"publishCacheEvent","description":"pending strategy execution process"}
+                },
+                "required":["stepStrategy","cacheEventKey"]
+            }
+        },
+        {
+            "if":{
+                "properties":{
+                    "strategy":{"const":"consumeCacheEvent","description":"reset publish event strategy execution process"}
+                },
+                "required":["cacheEventKey"]
+            }
+        },
+        {
+            "if":{
+                "properties":{
+                    "strategy":{"const":"groovyFormula" ,"description":"usually used on global rule"}
+                },
+                "required":["formaula","parameters","scala"]
+            }
+        }
+    ]
+   
+   
+
+}

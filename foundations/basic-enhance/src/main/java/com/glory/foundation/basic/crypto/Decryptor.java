@@ -16,6 +16,6 @@ package com.glory.foundation.basic.crypto;
  *
  */
 @FunctionalInterface
-public interface Decryptor {
-	String decrypt(String ciphertext);
+public interface Decryptor<T> {
+	String decrypt(T crypto);
 }

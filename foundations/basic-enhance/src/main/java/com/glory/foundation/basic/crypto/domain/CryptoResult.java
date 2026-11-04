@@ -10,6 +10,7 @@ package com.glory.foundation.basic.crypto.domain;
 
 
 import com.glory.foundation.basic.crypto.CryptoType;
+import com.glory.foundation.basic.domain.GloryResponse;
 
 /**
  * @author : YY
@@ -18,11 +19,9 @@ import com.glory.foundation.basic.crypto.CryptoType;
  *
  */
 
-public class CryptoResult {
+public class CryptoResult extends GloryResponse<String> {
 	private CryptoType type;
 	private String text;
-	private String privateKey;
-	private String publicKey;
 
 	public CryptoType getType() {
 		return type;
@@ -30,22 +29,6 @@ public class CryptoResult {
 
 	public void setType(CryptoType type) {
 		this.type = type;
-	}
-
-	public String getPrivateKey() {
-		return privateKey;
-	}
-
-	public void setPrivateKey(String privateKey) {
-		this.privateKey = privateKey;
-	}
-
-	public String getPublicKey() {
-		return publicKey;
-	}
-
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
 	}
 
 	public String getText() {
@@ -69,10 +52,4 @@ public class CryptoResult {
 		return result;
 	}
 
-	public static CryptoResult of(String publicKey,String privateKey){
-		CryptoResult result = new CryptoResult();
-		result.privateKey= privateKey;
-		result.publicKey = publicKey;
-		return result;
-	}
 }

@@ -58,7 +58,7 @@ public class SecretDeserializer extends JsonDeserializer<String> implements Cont
 	@Override
 	public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
 		if(Objects.nonNull(property)){
-			Secret secret = property.getAnnotation(Secret.class);
+			Secret secret = property.getContextAnnotation(Secret.class);
 			if (null != secret){
 				return new SecretAnnotationDeserializer(new SecretReference(secret, property.getType()));
 			}

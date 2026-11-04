@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.std.MapProperty;
-import com.glory.foundation.basic.crypto.CryptoContext;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import com.glory.foundation.basic.desensitize.DesensitizeHelper;
 import com.glory.foundation.basic.desensitize.rule.DesensitizeRule;
 
@@ -47,8 +47,8 @@ public class DesensitizePropertyFilter extends SimpleBeanPropertyFilter {
 				if (DesensitizeHelper.match(name)){
 					DesensitizeRule rule = DesensitizeHelper.findRule(name);
 					if (null != rule){
-						CryptoContext context = rule.generate();
-						context.setValue(str);
+						CryptoWrapper context = rule.generate();
+						context.setText(str);
 						((MapProperty) writer).setValue(DesensitizeHelper.desensitize(context));
 					}
 				}

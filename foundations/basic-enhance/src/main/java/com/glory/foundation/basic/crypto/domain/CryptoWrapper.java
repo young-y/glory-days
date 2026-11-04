@@ -9,8 +9,11 @@
 package com.glory.foundation.basic.crypto.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JavaType;
 import com.glory.foundation.basic.crypto.CryptoType;
 import com.glory.foundation.basic.crypto.annotation.Secret;
+import com.glory.foundation.basic.desensitize.Desensitize;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
@@ -29,6 +32,8 @@ public class CryptoWrapper {
     private String replacement = "$1****$2";
     private int minLength =4;
     private String minLengthStr = "****";
+    private JavaType javaType;
+    private String name;
 
     public CryptoType getType() {
         return type;
@@ -115,6 +120,22 @@ public class CryptoWrapper {
         this.minLengthStr = minLengthStr;
     }
 
+    public JavaType getJavaType() {
+        return javaType;
+    }
+
+    public void setJavaType(JavaType javaType) {
+        this.javaType = javaType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @JsonIgnore
     public String getCipherText(){
         if (withPrefix){
@@ -173,4 +194,17 @@ public class CryptoWrapper {
         wrapper.setPrefixStr(secret.prefix());
     	return wrapper;
     }
+
+    @JsonIgnore
+    public static CryptoWrapper of(Desensitize desensitize){
+        CryptoWrapper wrapper = new CryptoWrapper();
+        wrapper.setReplacement(desensitize.replacement());
+        wrapper.setPattern(desensitize.patten());
+        wrapper.setType(desensitize.algorithm());
+        wrapper.setWithPrefix(desensitize.withPrefix());
+        wrapper.setMinLength(desensitize.minLength());
+        return wrapper;
+    }
+
+
 }

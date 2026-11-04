@@ -10,7 +10,7 @@ package com.glory.foundation.basic.desensitize.jackson;
 
 
 import com.fasterxml.jackson.databind.util.StdConverter;
-import com.glory.foundation.basic.crypto.CryptoContext;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import com.glory.foundation.basic.desensitize.DesensitizeHelper;
 
 /**
@@ -21,10 +21,10 @@ import com.glory.foundation.basic.desensitize.DesensitizeHelper;
  */
 
 public class DesensitizeConverter extends StdConverter<String,String> {
-	private final CryptoContext context;
+	private final CryptoWrapper wrapper;
 
-	public DesensitizeConverter(CryptoContext context){
-		this.context = context;
+	public DesensitizeConverter(CryptoWrapper wrapper){
+		this.wrapper = wrapper;
 	}
 	/**
 	 * @param value
@@ -32,7 +32,7 @@ public class DesensitizeConverter extends StdConverter<String,String> {
 	 */
 	@Override
 	public String convert(String value) {
-		context.setValue(value);
-		return DesensitizeHelper.desensitize(context);
+		wrapper.setText(value);
+		return DesensitizeHelper.desensitize(wrapper);
 	}
 }

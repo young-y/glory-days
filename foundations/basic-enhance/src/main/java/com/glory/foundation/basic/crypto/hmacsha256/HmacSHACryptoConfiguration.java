@@ -10,6 +10,7 @@ package com.glory.foundation.basic.crypto.hmacsha256;
 
 
 import com.glory.foundation.basic.crypto.Encryptor;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -39,13 +40,14 @@ public class HmacSHACryptoConfiguration {
 
 	@Bean("hmacsha256Encryptor")
 	@ConditionalOnMissingBean(name = "hmacsha256Encryptor")
-	public Encryptor<String> hmacsha256Encryptor(){
-		return str -> {
-			if (StringUtils.hasLength(str)){
+	public Encryptor<CryptoWrapper> hmacsha256Encryptor(){
+		return wrapper -> {
+			String text = wrapper.getText();
+			if (StringUtils.hasLength(text)){
 				try{
 					Mac mac = Mac.getInstance(ALGORITHM);
 					mac.init(new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8),ALGORITHM));
-					byte[] bytes = mac.doFinal(str.getBytes(StandardCharsets.UTF_8));
+					byte[] bytes = mac.doFinal(text.getBytes(StandardCharsets.UTF_8));
 					if (formatHex){
 						return bytesToHex(bytes);
 					}
@@ -54,7 +56,7 @@ public class HmacSHACryptoConfiguration {
 					throw new RuntimeException(e);
 				}
 			}
-			return str;
+			return text;
 		};
 	}
 

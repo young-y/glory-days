@@ -40,15 +40,11 @@ public class CryptoHelper {
 		return cryptoMap.get(type);
 	}
 
-	/**
-	 * only support Mask crypto
-	 * @param context
-	 * @return
-	 */
-	public static String encrypt(CryptoContext context){
-		Assert.isTrue(CryptoType.MASK == context.getType(),"Algorithm must be Mask.");
-		return getCrypto(context.getType()).encrypt(context);
-	}
+
+//	public static String encrypt(CryptoContext context){
+//		Assert.isTrue(CryptoType.MASK == context.getType(),"Algorithm must be Mask.");
+//		return getCrypto(context.getType()).encrypt(context);
+//	}
 
 	public static String encrypt(@Nonnull String text) {
 		return encrypt(defaultType,text,false);
@@ -62,9 +58,10 @@ public class CryptoHelper {
 
 	public static String encrypt(@Nonnull CryptoWrapper wrapper) {
 		Assert.notNull(wrapper.getType(),"Wrapper type can't be null.");
+		Assert.hasLength(wrapper.getText(),"Wrapper text can't be null.");
 		Crypto crypto = getCrypto(wrapper.getType());
 		Assert.notNull(crypto, wrapper.getType() + " can't found Crypto.");
-		return wrapper.formatCipherText(crypto.encrypt(wrapper.getText()));
+		return wrapper.formatCipherText(crypto.encrypt(wrapper));
 	}
 
 	public static String encrypt( @Nonnull CryptoType algorithm,@Nonnull String text, boolean withPrefix) {
@@ -93,15 +90,7 @@ public class CryptoHelper {
 		Assert.hasLength(wrapper.getText(),"Wrapper text can't be null.");
 		Crypto crypto = getCrypto(wrapper.getType());
 		Assert.notNull(crypto, wrapper.getType() + " can't found Crypto.");
-		return crypto.decrypt(wrapper.getCipherText());
-	}
-
-	private static String getPrefix(String algorithm, boolean withPrefix) {
-		StringBuilder builder = new StringBuilder();
-		if (withPrefix) {
-			builder.append("{").append(algorithm).append("}");
-		}
-		return builder.toString();
+		return crypto.decrypt(wrapper);
 	}
 
 	public static String encryptAES(@Nonnull String text) {

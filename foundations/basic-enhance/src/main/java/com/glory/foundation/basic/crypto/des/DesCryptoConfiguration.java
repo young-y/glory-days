@@ -11,6 +11,7 @@ package com.glory.foundation.basic.crypto.des;
 
 import com.glory.foundation.basic.crypto.Decryptor;
 import com.glory.foundation.basic.crypto.Encryptor;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,26 +48,28 @@ public class DesCryptoConfiguration {
 
 	@Bean("desEncryptor")
 	@ConditionalOnMissingBean(name = "desEncryptor")
-	public Encryptor<String> desEncryptor(){
-		return str -> {
-			if (StringUtils.hasLength(str)){
+	public Encryptor<CryptoWrapper> desEncryptor(){
+		return wrapper -> {
+			String text = wrapper.getCipherText();
+			if (StringUtils.hasLength(text)){
 				try {
 					Cipher cipher = getCipher(Cipher.ENCRYPT_MODE);
-					byte[] bytes = cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
+					byte[] bytes = cipher.doFinal(text.getBytes(StandardCharsets.UTF_8));
 					return Base64.getEncoder().encodeToString(bytes);
 				} catch (Exception e) {
-					logger.warn(">> DES encrypt[{}] exception:",str,e);
+					logger.warn(">> DES encrypt[{}] exception:",text,e);
 					throw new RuntimeException(e);
 				}
 			}
-			return str;
+			return text;
 		};
 	}
 
 	@Bean("desDecryptor")
 	@ConditionalOnMissingBean(name = "desDecryptor")
-	public Decryptor desDecryptor(){
-		return ciphertext -> {
+	public Decryptor<CryptoWrapper> desDecryptor(){
+		return wrapper -> {
+			String ciphertext = wrapper.getCipherText();
 			if (StringUtils.hasLength(ciphertext)){
 				try {
 					Cipher cipher = getCipher(Cipher.DECRYPT_MODE);

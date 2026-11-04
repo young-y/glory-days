@@ -8,8 +8,8 @@
 
 package com.glory.foundation.basic.crypto.mask;
 
-import com.glory.foundation.basic.crypto.CryptoContext;
 import com.glory.foundation.basic.crypto.Encryptor;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -34,29 +34,29 @@ public class PattenMaskConfiguration {
 
 	@Bean("pattenMaskEncryptor")
 	@ConditionalOnMissingBean(name = "pattenMaskEncryptor")
-	public Encryptor<CryptoContext> pattenMaskEncryptor(){
-		return context->{
-			String value = context.getValue();
+	public Encryptor<CryptoWrapper> pattenMaskEncryptor(){
+		return wrapper->{
+			String value = wrapper.getText();
 			if (StringUtils.hasLength(value)){
-				if (value.length() >= context.getMinLength()){
-					return value.replaceAll(getPatten(context),getReplacement(context));
+				if (value.length() >= wrapper.getMinLength()){
+					return value.replaceAll(getPatten(wrapper),getReplacement(wrapper));
 				}else {
-					return getMinLengthString(context);
+					return getMinLengthString(wrapper);
 				}
 			}
 			return value;
 		};
 	}
 
-	private String getReplacement(CryptoContext context){
-		return StringUtils.hasLength(context.getReplacement())?context.getReplacement():replacement;
+	private String getReplacement(CryptoWrapper wrapper){
+		return StringUtils.hasLength(wrapper.getReplacement())?wrapper.getReplacement():replacement;
 	}
 
-	private String getPatten(CryptoContext context){
-		return StringUtils.hasLength(context.getPattern())?context.getPattern():patten;
+	private String getPatten(CryptoWrapper wrapper){
+		return StringUtils.hasLength(wrapper.getPattern())?wrapper.getPattern():patten;
 	}
 
-	private String getMinLengthString(CryptoContext context){
-		return StringUtils.hasLength(context.getMinLengthStr())?context.getMinLengthStr():minLengthStr;
+	private String getMinLengthString(CryptoWrapper wrapper){
+		return StringUtils.hasLength(wrapper.getMinLengthStr())?wrapper.getMinLengthStr():minLengthStr;
 	}
 }

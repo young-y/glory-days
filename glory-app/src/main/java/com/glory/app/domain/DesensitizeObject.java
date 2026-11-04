@@ -25,7 +25,6 @@ public class DesensitizeObject {
     private LocalDateTime birthday;
     @Desensitize(algorithm = CryptoType.AES,withPrefix = true)
     private String email;
-    @Desensitize(algorithm = CryptoType.DES,withPrefix = true)
     private String mobile;
 
     public String getName() {
@@ -60,6 +59,7 @@ public class DesensitizeObject {
         this.email = email;
     }
 
+    @Secret
     public String getMobile() {
         return mobile;
     }

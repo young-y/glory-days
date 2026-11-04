@@ -8,9 +8,9 @@
 
 package com.glory.magic.core.module.impl.strategy;
 
-import com.glory.foundation.basic.crypto.CryptoContext;
 import com.glory.foundation.basic.crypto.CryptoHelper;
 import com.glory.foundation.basic.crypto.CryptoType;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import com.glory.magic.core.domain.context.RuntimeMetadata;
 import com.glory.magic.core.domain.node.ResultKeyNameStrategy;
 import com.glory.magic.core.domain.node.ResultNode;
@@ -65,22 +65,22 @@ public class StringFormatStrategy implements MagicStrategy {
     }
 
     private String encryptMask(MagicPlanRuleBo rule, String value) {
-        CryptoContext context = new CryptoContext();
-        context.setType(CryptoType.MASK);
+        CryptoWrapper wrapper = new CryptoWrapper();
+        wrapper.setType(CryptoType.MASK);
         if (rule.containsKey(RULE_FORMAT_PATTERN)){
-            context.setPattern(rule.getString(RULE_FORMAT_PATTERN));
+            wrapper.setPattern(rule.getString(RULE_FORMAT_PATTERN));
         }
         if (rule.containsKey(RULE_FORMAT_REPLACEMENT)){
-            context.setReplacement(rule.getString(RULE_FORMAT_REPLACEMENT));
+            wrapper.setReplacement(rule.getString(RULE_FORMAT_REPLACEMENT));
         }
         if (rule.containsKey(RULE_FORMAT_MINLENGTH)){
-            context.setMinLength(Integer.parseInt(rule.getString(RULE_FORMAT_MINLENGTH)));
+            wrapper.setMinLength(Integer.parseInt(rule.getString(RULE_FORMAT_MINLENGTH)));
         }
         if (rule.containsKey(RULE_FORMAT_MINLENGTH_STR)){
-            context.setMinLengthStr(rule.getString(RULE_FORMAT_MINLENGTH_STR));
+            wrapper.setMinLengthStr(rule.getString(RULE_FORMAT_MINLENGTH_STR));
         }
-        context.setValue(value);
-        return CryptoHelper.encrypt(context);
+        wrapper.setText(value);
+        return CryptoHelper.encrypt(wrapper);
     }
 
     @Override

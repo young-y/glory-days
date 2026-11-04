@@ -1,0 +1,229 @@
+{
+  "planCode": "planCode",
+  "plan": {
+    "name": "test",
+    "planCode": "stringFormat",
+    "rules": [
+      {
+        "name":"master",
+        "input":"master#*",
+        "output":"holder#*",
+        "excludeNodes":["email"],
+        "strategy": "valueCopy"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailUpper",
+        "format":"upper",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailLower",
+        "format":"lower",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailFirst",
+        "format":"first",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailMask",
+        "format":"mask",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailMask1",
+        "format":"mask",
+        "pattern":"^(.{4}).*(.{4})$",
+        "replacement":"$1****$2",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#emails",
+        "output":"holder#emailMask2",
+        "format":"mask",
+        "pattern":"^(.{4}).*(.{4})$",
+        "replacement":"$1****$2",
+        "minLength":"14",
+        "minLengthStr":"****",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailAES",
+        "format":"encrypt",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailDES",
+        "algorithm":"DES",
+        "format":"encrypt",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailRSA",
+        "algorithm":"RSA",
+        "format":"encrypt",
+        "strategy": "stringFormat"
+      },
+      {
+        "name":"master",
+        "input":"master#email",
+        "output":"holder#emailBase",
+        "algorithm":"BASE64",
+        "format":"encrypt",
+        "strategy": "stringFormat"
+      }
+    ],
+    "codes":[
+      {
+        "name":"payMod",
+        "items":[
+          {
+            "name":"aliPay",
+            "srcValue":1,
+            "destValue":"A"
+          },
+          {
+            "name":"wePay",
+            "srcValue":2,
+            "destValue":"W"
+          },
+          {
+            "name":"cash",
+            "srcValue":3,
+            "destValue":"C"
+          }
+        ]
+      }
+    ]
+  },
+  "withDefaultRule": false,
+  "keyNameStrategy": "normalStrategy",
+  "data": {
+    "name": "faimly1",
+    "member": 4,
+    "house": {
+      "name": "heping",
+      "category": "minfang",
+      "area": 90.0,
+      "buildTime": "2000-03-01T00:00:00"
+    },
+    "master": {
+      "name": "zhigao",
+      "age": 50,
+      "sex": "M",
+      "role": "jiazhu",
+      "birthday": "1970-03-11T00:00:00",
+      "email": "tianditong@163.com",
+      "emails": "sort@163.com",
+      "phone": "17022229999",
+      "work": "dev",
+      "salary": 10000.00
+    },
+    "members": [
+      {
+        "name": "zhigao",
+        "age": 50,
+        "sex": "M",
+        "role": "jiazhu",
+        "birthday": "1970-03-11T00:00:00",
+        "email": "dsfsfs@163.com",
+        "phone": "9233242",
+        "work": "dev",
+        "salary": 10000.00,
+        "friends": [
+          {
+            "name": "hebi",
+            "age": 45,
+            "sex": "M",
+            "phone": "3455646464"
+          },
+          {
+            "name": "nancy",
+            "age": 60,
+            "sex": "W",
+            "phone": "89978ww9"
+          }
+        ]
+      },
+      {
+        "name": "tiantian",
+        "age": 48,
+        "sex": "W",
+        "role": "wife",
+        "birthday": "1977-03-11T00:00:00",
+        "email": "sdfsa@163.com",
+        "phone": "345645"
+      },
+      {
+        "name": "wawa",
+        "age": 18,
+        "sex": "W",
+        "role": "girl",
+        "birthday": "1999-05-11T00:00:00",
+        "email": "wawa@163.com",
+        "phone": "9999999",
+        "friends": [
+          {
+            "name": "jarrod",
+            "age": 20,
+            "sex": "W",
+            "phone": "0999999"
+          },
+          {
+            "name": "yongwei",
+            "age": 23,
+            "sex": "M",
+            "phone": "888888888"
+          },
+          {
+            "name": "limi",
+            "age": 12,
+            "sex": "M",
+            "phone": "444444"
+          }
+        ]
+      },
+      {
+        "name": "gege",
+        "age": 28,
+        "sex": "M",
+        "role": "sun",
+        "birthday": "1990-05-11T00:00:00",
+        "email": "gege@163.com",
+        "phone": "33333"
+      }
+    ],
+    "pets": [
+      {
+        "name": "dahuang",
+        "category": "dog",
+        "age": 3,
+        "weight": 20
+      }
+    ],
+    "address": {
+      "country": "zh",
+      "province": "sh",
+      "city": "pudong",
+      "street": "chengshan rold"
+    }
+  }
+}

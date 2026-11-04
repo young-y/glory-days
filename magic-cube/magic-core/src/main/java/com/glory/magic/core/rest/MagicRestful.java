@@ -58,9 +58,10 @@ public class MagicRestful {
 
     @PostMapping("/execute/async")
     public <T,R> GloryResponse<R>  executeAsync(@RequestBody MagicRequest<T> request) {
-        return service.execute(request,( response)->{
+         service.executeAsync(request,( response)->{
             logger.info(">>execute async callback:{}", FormatHelper.toJson(response));
-        });
+         });
+         return GloryResponse.Success();
     }
 
 }

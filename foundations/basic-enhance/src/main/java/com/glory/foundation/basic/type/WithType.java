@@ -52,4 +52,4 @@ import java.lang.annotation.Target;
 @JsonDeserialize(using = WithTypeDeserializer.class)
 public @interface WithType {
 
- }
+}

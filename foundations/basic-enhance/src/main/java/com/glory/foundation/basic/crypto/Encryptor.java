@@ -19,6 +19,6 @@ package com.glory.foundation.basic.crypto;
 public interface Encryptor <T>{
 
 
-	String encrypt(T str);
+	String encrypt(T crypto);
 
 }

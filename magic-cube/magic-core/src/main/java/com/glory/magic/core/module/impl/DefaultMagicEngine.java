@@ -49,6 +49,7 @@ public class DefaultMagicEngine implements MagicEngine {
 
     @Override
     public <T,R> MagicResponse<R> execute(@Nonnull MagicRequest<T> request) {
+        Assert.notNull(request.getData(), "Request data is null.");
         MagicPlanBo plan = request.getPlan();
         if (null == plan){//use request plan if it's plan not null
             String planCode = request.getPlanCode();

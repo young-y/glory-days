@@ -8,8 +8,6 @@
 
 package com.glory.magic.app.function;
 
-import com.glory.foundation.basic.crypto.CryptoContext;
-import com.glory.foundation.basic.crypto.CryptoHelper;
 import com.glory.foundation.basic.crypto.CryptoType;
 import com.glory.foundation.basic.crypto.util.CryptoUtil;
 import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
@@ -22,12 +20,20 @@ import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 public class CryptoTest {
 
     public static void main(String[] args) {
-        testAes("123456");
-//        testDES("QQQQQ");
-//        testRSA("AAAAA");
-//        testBase("AAAAA");
+        testAes();
         testMask("sort@163.com");
 
+    }
+
+    private static void testAes(){
+        String str = "123456";
+        CryptoWrapper wrapper = new CryptoWrapper();
+        wrapper.setType(CryptoType.AES);
+        wrapper.setText(str);
+        String encrypt = CryptoUtil.encrypt(wrapper);
+        wrapper.setText(encrypt);
+        String decrypt = CryptoUtil.decrypt(wrapper);
+        System.out.printf("[%s] >> str=[%s] encrypt =[%s],decrypt =[%s]%n",wrapper.getType().getAlgorithm(),str,encrypt,decrypt);
     }
 
     private static void testMask(String str){
@@ -35,7 +41,7 @@ public class CryptoTest {
         context.setText(str);
         context.setPattern("^(.{4}).*(.{4})$");
         context.setReplacement("$1****$2");
-        context.setMinLength(14);
+        context.setMinLength(10);
         context.setMinLengthStr("****");
         String encrypt = CryptoUtil.encrypt(context);
         System.out.println("mask ->"+encrypt);

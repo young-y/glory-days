@@ -1,0 +1,12 @@
+{
+    "type":"object",
+    "$comment": "MagicPlanFilterBo",
+    "properties": {
+        "name":{"type":"string","description": "filter name"},
+        "description":{"type":"string","description": "description of filter"},
+        "enabled":{"type":"boolean","default":"true","description": "effectived status of filter"},
+        "tenant":{"type":"string","description": "tenant code"},
+        "patterns":{"type":"array","items": {"type":"string"},"$comment":"node path regular expression"}
+    },
+    "required": ["name","patterns"]
+}

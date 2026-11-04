@@ -12,6 +12,7 @@ import com.glory.foundation.basic.crypto.Crypto;
 import com.glory.foundation.basic.crypto.CryptoConstant;
 import com.glory.foundation.basic.crypto.CryptoType;
 import com.glory.foundation.basic.crypto.Encryptor;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class HmacSha256Crypto implements Crypto<String> {
+public class HmacSha256Crypto implements Crypto<CryptoWrapper> {
 
 	@Resource(name = "hmacsha256Encryptor")
 	private Encryptor encryptor;
@@ -36,20 +37,20 @@ public class HmacSha256Crypto implements Crypto<String> {
 	}
 
 	/**
-	 * @param ciphertext
+	 * @param crypto
 	 * @return
 	 */
 	@Override
-	public String decrypt(String ciphertext) {
+	public String decrypt(CryptoWrapper crypto) {
 		throw new RuntimeException("Hmac-SHA256 algorithm don't support decrypt operation.");
 	}
 
 	/**
-	 * @param str
+	 * @param crypto
 	 * @return
 	 */
 	@Override
-	public String encrypt(String str) {
-		return encryptor.encrypt(str);
+	public String encrypt(CryptoWrapper crypto) {
+		return encryptor.encrypt(crypto);
 	}
 }

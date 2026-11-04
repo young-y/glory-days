@@ -10,11 +10,10 @@ package com.glory.foundation.basic.desensitize.rule;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.glory.foundation.basic.crypto.CryptoContext;
 import com.glory.foundation.basic.crypto.CryptoType;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import jakarta.annotation.Nonnull;
 import org.springframework.util.CollectionUtils;
-
 
 import java.util.List;
 
@@ -158,19 +157,19 @@ public class DesensitizeRule {
 	}
 
 	@JsonIgnore
-	public CryptoContext generate(){
-		CryptoContext context = new CryptoContext();
+	public CryptoWrapper generate(){
+		CryptoWrapper wrapper = new CryptoWrapper();
 		CryptoType type = CryptoType.fromPersistableValue(algorithm);
 		if (null == type){
 			type = CryptoType.MASK;
 		}
-		context.setType(type);
-		context.setPattern(pattern);
-		context.setReplacement(replacement);
-		context.setMinLength(minLength);
-		context.setMinLengthStr(minLengthStr);
-		context.setWithPrefix(withPrefix);
-		context.setPrefix(prefix);
-		return context;
+		wrapper.setType(type);
+		wrapper.setPattern(pattern);
+		wrapper.setReplacement(replacement);
+		wrapper.setMinLength(minLength);
+		wrapper.setMinLengthStr(minLengthStr);
+		wrapper.setWithPrefix(withPrefix);
+		wrapper.setPrefixStr(prefix);
+		return wrapper;
 	}
 }

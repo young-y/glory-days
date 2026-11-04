@@ -11,6 +11,7 @@ package com.glory.foundation.basic.crypto.aes;
 
 
 import com.glory.foundation.basic.crypto.*;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class AesCrypto implements Crypto<String> {
+public class AesCrypto implements Crypto<CryptoWrapper> {
 	@Resource(name = "aesEncryptor")
 	private Encryptor encryptor;
 	@Resource(name = "aesDecryptor")
@@ -33,21 +34,21 @@ public class AesCrypto implements Crypto<String> {
 	}
 
 	/**
-	 * @param ciphertext
+	 * @param crypto
 	 * @return
 	 */
 	@Override
-	public String decrypt(String ciphertext) {
-		return decryptor.decrypt(ciphertext);
+	public String decrypt(CryptoWrapper crypto) {
+		return decryptor.decrypt(crypto);
 	}
 
 	/**
-	 * @param str
+	 * @param crypto
 	 * @return
 	 */
 	@Override
-	public String encrypt(String str) {
-		return encryptor.encrypt(str);
+	public String encrypt(CryptoWrapper crypto) {
+		return encryptor.encrypt(crypto);
 	}
 
 }

@@ -14,10 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.glory.foundation.basic.crypto.CryptoContext;
 import com.glory.foundation.basic.crypto.CryptoHelper;
-import com.glory.foundation.basic.crypto.CryptoType;
-import com.glory.foundation.basic.crypto.annotation.Secret;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import com.glory.foundation.basic.desensitize.condition.DesensitizePredicate;
 import com.glory.foundation.basic.desensitize.jackson.DesensitizeAnnotationIntrospector;
 import com.glory.foundation.basic.desensitize.jackson.DesensitizePropertyFilter;
@@ -28,7 +26,6 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
@@ -57,15 +54,11 @@ public class DesensitizeHelper {
 		}
 		return obj;
 	}
-	public static String desensitize(CryptoContext context){
+	public static String desensitize(CryptoWrapper wrapper){
 		if (activity()){
-			CryptoType algorithm = context.getType();
-			if (CryptoType.MASK == algorithm){
-				return CryptoHelper.encrypt(context);
-			}
-			return CryptoHelper.encrypt(context.wrapper());
+			return CryptoHelper.encrypt(wrapper);
 		}
-		return context.getValue();
+		return wrapper.getText();
 	}
 
 	/**
@@ -106,10 +99,10 @@ public class DesensitizeHelper {
 		return activity() && null != ruleConfig &&ruleConfig.match(name);
 	}
 
-	public static CryptoContext createContext(Annotated annotated){
+	public static CryptoWrapper createContext(Annotated annotated){
 		Desensitize desensitize = annotated.getAnnotation(Desensitize.class);
 		if (null != desensitize){
-			return CryptoContext.create(desensitize);
+			return CryptoWrapper.of(desensitize);
 		}
 		AnnotatedElement element = annotated.getAnnotated();
 		try{

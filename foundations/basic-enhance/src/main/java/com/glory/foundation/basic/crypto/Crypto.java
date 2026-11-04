@@ -16,6 +16,6 @@ package com.glory.foundation.basic.crypto;
  *
  */
 
-public interface Crypto<T> extends Encryptor<T>,Decryptor{
+public interface Crypto<T> extends Encryptor<T>,Decryptor<T>{
 	CryptoType algorithm();
 }

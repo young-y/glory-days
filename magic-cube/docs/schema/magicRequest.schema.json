@@ -1,0 +1,118 @@
+{
+    "type":"object",
+    "$comment": "javaType:MagicRequest",
+    "properties": {
+        "planCode":{"type":"string","description": "plan code"},
+        "plan":{
+            "type":"object",
+            "description": "define the model transformation rules. ",
+            "properties": {
+                "planCode":{"type":"string","description": "the unique indentification of plan"},
+                "tenant":{"type":"string","description": "tenant code,not require"},
+                "enabled":{"type":"boolean","default":true,"description": "default true,plan active status"},
+                "name":{"type":"string","description":"plan name"},
+                "description":{"type":"string","description": "the plan description detail"},
+                "keyNameStrategy":{"type":"string","description": "Key name strategy of result set"},
+                "filters":{
+                    "type":"array",
+                    "items": {
+                        "type":"object",
+                        "$comment": "MagicPlanFilterBo",
+                        "properties": {
+                            "name":{"type":"string","description": "filter name"},
+                            "description":{"type":"string","description": "description of filter"},
+                            "enabled":{"type":"boolean","default":"true","description": "effectived status of filter"},
+                            "tenant":{"type":"string","description": "tenant code"},
+                            "patterns":{"type":"array","items": {"type":"string"}}
+                        },
+                        "required": ["name","patterns"]
+                    }
+                },
+                "rules":{
+                    "type":"array",
+                    "items": {
+                        "type":"object",
+                        "$comment": "MagicPlanRuleBo",
+                        "properties": {
+                            "name":{"type":"string","description": "rule name"},
+                            "ailas":{"type":"string","description": "key name  of result map,if need assigned name"},
+                            "input":{
+                                "type":"string"
+                                ,"description": "data source node path,Separate each level with a # symbol,'name-*' is list,endwith '#*' the final layer of fuzzy matching",
+                                "examples": ["aaa#bbb#ccc","root#list-*#nodeName","aaa#bbb#*"]
+                            },
+                            "output":{
+                                "type":"string","description": "the result node path",
+                                "examples": ["aaa#bbb#ccc","root#list-*#nodeName","aaa#bbb#*","node1#${name}-*#key"]
+                            },
+                            "formula":{"type":"string","description": "the calculate formula if stategy need calculate"},
+                            "format":{"type":"string","description": "define output string format in format strategy,eg:dateFormat,stringFormat,numberFormat"},
+                            "scala":{"type":"integer","description": "keed the decimal places when output number"},
+                            "type":{"type":"integer","enum": [0,1],"default":0,"description": "0:normal rule,1:dynamic rule"},
+                            "description":{"type":"string","description": "rule description"},
+                            "strategy":{"type":"string","description": "rule strategy"},
+                            "stepStrategy":{"type":"array","items": {"type":"string","description": "next strategy"}},
+                            "value":{"type":"string","description": "fixedValue strategy ,assigned a value"},
+                            "priority":{"type":"integer","default":10,"description": "rule sorted asc by priority,if exist more same rule strategy, get first"},
+                            "excludeNodes":{"type":"array","items": {"type":"string"},"description": "when last digit fuzzy matching ,exculde nodes"},
+                            "tenant":{"type":"string","description": "tenant code"},
+                            "enabled":{"type":"boolean","default":true,"description": "the rule active status"}
+                        },
+                        "required": ["name","input","output","strategy"]
+                    }
+                },
+                "codes":{
+                    "type":"array",
+                    "items": {
+                        "type":"object",
+                        "$comment": "MagicCodeBo",
+                        "properties": {
+                            "name":{"type":"string","description": "code name"},
+                            "description":{"type":"string","description": "code description"},
+                            "enabled":{"type":"boolean","default":true,"description": "the code active status"},
+                            "tenant":{"type":"string","description": "tenant code"},
+                            "items":{
+                                "type":"array",
+                                "items": {
+                                    "type":"object",
+                                    "$comment": "MagicCodeItemBo",
+                                    "properties": {
+                                        "tenant":{"type":"string","description": "tenant code"},
+                                        "enabled":{"type":"boolean","default":true,"description": "the codeItem active status"},
+                                        "name":{"type":"string","description": "code item name"},
+                                        "srcValue":{"type":"string","description": "srcValue, query condition"},
+                                        "srcValue1":{"type":"string","description": "srcValue1 ,query condition1"},
+                                        "destValue":{"type":"string","default":"","description": "the result value"},
+                                        "description":{"type":"string","description": "code item description"}
+                                    },
+                                    "required": ["name","srcValue","destValue"]
+                                }
+                            }
+                        },
+                        "required": ["name"]
+                    }
+                }
+            },
+            "required": ["planCode","name"]
+        },
+        "tenant":{"type":"string","description": "tenant code"},
+        "withDefaultRule":{"type":"boolean","default":false,"description": "use default rule if not match any rule"},
+        "keyNameStrategy":{"type":"string","description": "output result map key name strategy,default normalStrategy",
+            "enum": ["firstStrategy","upperStrategy","lowerStrategy","normalStrategy"]}
+        
+    },
+    "oneOf": [
+        {
+            "if": {
+                "properties": {"plan":{"type":"null"}},
+                "required": ["planCode"]
+            }
+        },
+        {
+            "if": {
+                "properties": {"planCode":{"type":"null"}},
+                "required": ["plan"]
+            }
+        }
+    ]
+}

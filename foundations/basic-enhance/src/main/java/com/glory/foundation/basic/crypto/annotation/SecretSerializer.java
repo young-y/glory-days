@@ -54,7 +54,7 @@ public class SecretSerializer extends JsonSerializer<String> implements Contextu
 		if (Objects.isNull(property)){
 			return prov.findNullValueSerializer(null);
 		}
-		Secret secret = property.getAnnotation(Secret.class);
+		Secret secret = property.getContextAnnotation(Secret.class);
 		if (null !=secret ){
 			return new SecretAnnotationSerializer(new SecretReference(secret,property.getType()));
 		}

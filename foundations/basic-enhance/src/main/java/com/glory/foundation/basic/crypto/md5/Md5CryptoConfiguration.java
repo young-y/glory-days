@@ -10,6 +10,7 @@ package com.glory.foundation.basic.crypto.md5;
 
 
 import com.glory.foundation.basic.crypto.Encryptor;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -34,12 +35,13 @@ public class Md5CryptoConfiguration {
 	private boolean formatHex;
 	@Bean("md5Encryptor")
 	@ConditionalOnMissingBean(name = "md5Encryptor")
-	public Encryptor<String> sha256Encryptor() {
-		return str -> {
-			if (StringUtils.hasLength(str)) {
+	public Encryptor<CryptoWrapper> sha256Encryptor() {
+		return wrapper -> {
+			String text = wrapper.getText();
+			if (StringUtils.hasLength(text)) {
 				try {
 					MessageDigest digest = MessageDigest.getInstance("MD5");
-					byte[] bytes = digest.digest(str.getBytes(StandardCharsets.UTF_8));
+					byte[] bytes = digest.digest(text.getBytes(StandardCharsets.UTF_8));
 					if (formatHex){
 						return bytesToHex(bytes);
 					}
@@ -48,7 +50,7 @@ public class Md5CryptoConfiguration {
 					throw new RuntimeException(e);
 				}
 			}
-			return str;
+			return text;
 		};
 	}
 	private String bytesToHex(byte[] bytes) {

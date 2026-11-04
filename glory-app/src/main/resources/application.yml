@@ -41,15 +41,15 @@ glory:
       names: ^\w*ph\w+$,email
       excludes: case
       enabled: true
-#    rules[1]:
-#      #      algorithm: AES
-#      pattern: ^(.{3}).*$
-#      replacement: $1###
-#      names: case2
-#      min-length: 4
-#      with-prefix: true
-#    rules[2]:
-#      algorithm: AES
-#      pattern: ^(.{1}).*$
-#      replacement: $1*****
-#      names: name
+    rules[1]:
+      #      algorithm: AES
+      pattern: ^(.{3}).*$
+      replacement: $1###
+      names: case2
+      min-length: 4
+      with-prefix: true
+    rules[2]:
+      algorithm: AES
+      pattern: ^(.{1}).*$
+      replacement: $1*****
+      names: name

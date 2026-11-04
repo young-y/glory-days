@@ -10,9 +10,9 @@ package com.glory.foundation.basic.crypto.mask;
 
 
 import com.glory.foundation.basic.crypto.Crypto;
-import com.glory.foundation.basic.crypto.CryptoContext;
 import com.glory.foundation.basic.crypto.CryptoType;
 import com.glory.foundation.basic.crypto.Encryptor;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -24,9 +24,9 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class PattenMaskCrypto implements Crypto<CryptoContext> {
+public class PattenMaskCrypto implements Crypto<CryptoWrapper> {
 	@Resource(name = "pattenMaskEncryptor")
-	private Encryptor<CryptoContext> encryptor;
+	private Encryptor<CryptoWrapper> encryptor;
 	/**
 	 * @return
 	 */
@@ -40,16 +40,16 @@ public class PattenMaskCrypto implements Crypto<CryptoContext> {
 	 * @return
 	 */
 	@Override
-	public String decrypt(String ciphertext) {
+	public String decrypt(CryptoWrapper ciphertext) {
 		throw new RuntimeException("Mask can't support decrypt operation.");
 	}
 
 	/**
-	 * @param context
+	 * @param crypto
 	 * @return
 	 */
 	@Override
-	public String encrypt(CryptoContext context) {
-		return encryptor.encrypt(context);
+	public String encrypt(CryptoWrapper crypto) {
+		return encryptor.encrypt(crypto);
 	}
 }

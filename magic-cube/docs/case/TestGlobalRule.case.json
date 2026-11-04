@@ -1,0 +1,156 @@
+{
+  "planCode": "planCode",
+  "plan": {
+    "name": "test",
+    "planCode": "groovyFormula",
+    "rules": [
+      {
+        "name": "butie",
+        "input": "butie",
+        "output": "butie",
+        "cacheEventKey":"salary_cache",
+        "strategy": "publishCacheEvent"
+      },
+      {
+        "name": "members",
+        "input": "members-*#salary",
+        "output": "members-*#salary",
+        "cacheEventKey":"salarys_cache",
+        "strategy": "publishCacheEvent"
+      },{
+        "name": "global",
+        "output": "totalAmount",
+        "formula": "(butie+salary)*(1-tax)*member+ms*freq+jiangjin*0.8",
+        "parameters":{
+          "$CA_salary":"salarys_cache",
+          "$R_butie":"butie",
+          "$R_tax":"tax",
+          "$R_member":"member",
+          "$R_ms":"master#salary",
+          "$R_freq":"master#freq",
+          "jiangjin":10000
+        },
+        "scala": 2,
+        "type":2,
+        "strategy": "groovyFormula"
+      }
+    ]
+  },
+  "withDefaultRule": false,
+  "keyNameStrategy": "normalStrategy",
+  "data": {
+    "name": "faimly1",
+    "member": 4,
+    "butie":456.0,
+    "tax":0.2,
+    "house": {
+      "name": "heping",
+      "category": "minfang",
+      "area": 90.0,
+      "buildTime": "2000-03-01T00:00:00"
+    },
+    "master": {
+      "name": "zhigao",
+      "age": 50,
+      "sex": "M",
+      "role": "jiazhu",
+      "birthday": "1970-03-11T00:00:00",
+      "email": "tianditong@163.com",
+      "phone": "17022229999",
+      "work": "dev",
+      "freq":12,
+      "salary": 10000.00
+    },
+    "members": [
+      {
+        "name": "zhigao",
+        "age": 50,
+        "sex": "M",
+        "role": "jiazhu",
+        "birthday": "1970-03-11T00:00:00",
+        "email": "dsfsfs@163.com",
+        "phone": "9233242",
+        "work": "dev",
+        "salary": 10000.00,
+        "friends": [
+          {
+            "name": "hebi",
+            "age": 45,
+            "sex": "M",
+            "phone": "3455646464"
+          },
+          {
+            "name": "nancy",
+            "age": 60,
+            "sex": "W",
+            "phone": "89978ww9"
+          }
+        ]
+      },
+      {
+        "name": "tiantian",
+        "age": 48,
+        "sex": "W",
+        "role": "wife",
+        "birthday": "1977-03-11T00:00:00",
+        "email": "sdfsa@163.com",
+        "salary": 10000.00,
+        "phone": "345645"
+      },
+      {
+        "name": "wawa",
+        "age": 18,
+        "sex": "W",
+        "role": "girl",
+        "birthday": "1999-05-11T00:00:00",
+        "email": "wawa@163.com",
+        "phone": "9999999",
+        "salary": 10000.00,
+        "friends": [
+          {
+            "name": "jarrod",
+            "age": 20,
+            "sex": "W",
+            "phone": "0999999"
+          },
+          {
+            "name": "yongwei",
+            "age": 23,
+            "sex": "M",
+            "phone": "888888888"
+          },
+          {
+            "name": "limi",
+            "age": 12,
+            "sex": "M",
+            "phone": "444444"
+          }
+        ]
+      },
+      {
+        "name": "gege",
+        "age": 28,
+        "sex": "M",
+        "role": "sun",
+        "birthday": "1990-05-11T00:00:00",
+        "email": "gege@163.com",
+        "salary": 10000.00,
+        "phone": "33333"
+      }
+    ],
+    "pets": [
+      {
+        "name": "dahuang",
+        "category": "dog",
+        "age": 3,
+        "weight": 20
+      }
+    ],
+    "address": {
+      "country": "zh",
+      "province": "sh",
+      "city": "pudong",
+      "street": "chengshan rold"
+    }
+  }
+}

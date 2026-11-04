@@ -41,8 +41,7 @@ public class MagicStrategyDelegate extends AbstractDelegate<MagicStrategy> {
             MagicPlanRuleBo stepRule = context.getRule().copyNextStrategyRule();
             MagicContext stepContext = context.copyRule(stepRule);
             metadata.setContext(stepContext);
-            //TODO test
-            logger.info(">> step process rule[{}] is executing.",stepRule.getStrategy());
+            logger.debug(">> step process rule[{}] is executing.",stepRule.getStrategy());
             delegate(stepContext).doExecute(metadata);
             stepProcess(metadata);
         }

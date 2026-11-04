@@ -15,8 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import com.glory.foundation.basic.crypto.CryptoContext;
-import com.glory.foundation.basic.crypto.annotation.Secret;
+import com.glory.foundation.basic.crypto.domain.CryptoWrapper;
 import com.glory.foundation.basic.desensitize.Desensitize;
 import com.glory.foundation.basic.desensitize.DesensitizeHelper;
 
@@ -58,7 +57,7 @@ public class DesensitizeSerializer extends JsonSerializer<String> implements Con
 		}
 		Desensitize desensitize = property.getAnnotation(Desensitize.class);
 		if (null != desensitize) {
-			CryptoContext context = CryptoContext.create(desensitize);
+			CryptoWrapper context = CryptoWrapper.of(desensitize);
 			context.setJavaType(property.getType());
 			context.setName(property.getName());
 			return new DesensitizeAnnotationSerializer(context);
@@ -67,20 +66,20 @@ public class DesensitizeSerializer extends JsonSerializer<String> implements Con
 	}
 
 	public static class DesensitizeAnnotationSerializer extends JsonSerializer<Object> {
-		private CryptoContext context;
+		private final CryptoWrapper wrapper;
 
-		public DesensitizeAnnotationSerializer(CryptoContext context) {
-			this.context = context;
+		public DesensitizeAnnotationSerializer(CryptoWrapper wrapper) {
+			this.wrapper = wrapper;
 		}
 
 
 		@Override
 		public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
 			if (value instanceof String){
-				context.setValue((String) value);
-				value= DesensitizeHelper.desensitize(context);
+				wrapper.setText((String) value);
+				value= DesensitizeHelper.desensitize(wrapper);
 			}
-			serializers.findPrimaryPropertySerializer(context.getJavaType(),null).serialize(value,gen,serializers);
+			serializers.findPrimaryPropertySerializer(wrapper.getJavaType(),null).serialize(value,gen,serializers);
 		}
 
 	}
